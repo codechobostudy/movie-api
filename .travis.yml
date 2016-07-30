@@ -1,0 +1,10 @@
+language: java
+jdk:
+  - oraclejdk8
+script: "mvn -P daily-build clean compile cobertura:cobertura"
+env:
+  - TERM=dumb
+after_success:
+  - mvn -P daily-build coveralls:report
+notifications:
+  slack: springair2:qywHyRIrDhZ0uLcumslcJxP6

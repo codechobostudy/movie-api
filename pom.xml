@@ -69,6 +69,11 @@
 			<version>2.7</version>
 		</dependency>
 		<dependency>
+			<groupId>org.eluder.coveralls</groupId>
+			<artifactId>coveralls-maven-plugin</artifactId>
+			<version>4.2.0</version>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-pmd-plugin</artifactId>
 			<version>3.6</version>
@@ -121,6 +126,14 @@
 			<id>daily-build</id>
 			<build>
 				<plugins>
+					<plugin>
+						<groupId>org.eluder.coveralls</groupId>
+						<artifactId>coveralls-maven-plugin</artifactId>
+						<version>4.2.0</version>
+						<configuration>
+							<repoToken>wNa4AbKFFDxJBnUjc1QQLrCz1SaEosa9F</repoToken>
+						</configuration>
+					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-surefire-plugin</artifactId>
