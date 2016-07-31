@@ -1,6 +1,8 @@
 # 영화예매프로젝트
-> 코드초보커뮤니티 SpringAir 스터디에서 진행되는 Spring boot, JPA 기반의 웹 프로젝트 
+> 코드초보커뮤니티 SpringAir 스터디에서 진행되는 Spring boot, JPA 기반의 웹 프로젝트  
 
+[![Build Status](https://travis-ci.org/codechobostudy/movie-api.svg?branch=develop)](https://travis-ci.org/codechobostudy/movie-api)
+[![Coverage Status](https://coveralls.io/repos/github/codechobostudy/movie-api/badge.svg?branch=develop)](https://coveralls.io/github/codechobostudy/movie-api?branch=develop)
 
 ## Development Guidelines
 > Api Required : java8 이상 
