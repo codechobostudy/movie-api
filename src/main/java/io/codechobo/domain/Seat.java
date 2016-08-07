@@ -1,26 +1,21 @@
 package io.codechobo.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
-/**
- * 좌석
- */
 @Entity
 @Getter
+@NoArgsConstructor
 public class Seat {
 
-	@GeneratedValue
-	@Id
-	private Long no;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id
+    private Long id;
+    private int[] seats; // ?
 
-	private String seatNo;
-
-	@ManyToOne
-	private Screen screen;
-
+    public Seat(int[] seats) {
+        this.seats = seats;
+    }
 }
