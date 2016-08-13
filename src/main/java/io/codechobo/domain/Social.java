@@ -7,7 +7,7 @@ import javax.persistence.*;
 /**
  * Created by Loustler on 8/7/16.
  */
-@Entity
+@Entity(name = "member_social")
 @Getter
 public class Social {
 

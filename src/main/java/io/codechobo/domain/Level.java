@@ -6,7 +6,7 @@ import javax.persistence.*;
 /**
  * Created by Loustler on 8/7/16.
  */
-@Entity(name = "user_level")
+@Entity(name = "member_level")
 public class Level {
     /*
      * 레벨과 멤버는 1:1 관계, FK역할을 해야 하는데 어떻게?
