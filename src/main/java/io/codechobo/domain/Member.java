@@ -17,7 +17,7 @@ public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "member_seq", insertable = false, updatable = false)
+    @Column(name = "member_seq", updatable = false)
     private Integer seq; // 시퀀스
 
     @Id
@@ -34,13 +34,23 @@ public class Member {
     @Column(name = "member_email")
     private String email; // 이메일 uniq
 
+    /*
+     * 회원가입일은 변경될 일이 없기때문에 update 못하게
+     */
     @Column(name = "member_reg_date", updatable = false)
     private Date regDate; // 회원가입일
 
-    @OneToOne(cascade = CascadeType.ALL)
+    /*
+     * Join시 level은 반드시 member에게 존재하여야 함
+     * level은 member에 종속적이므로 cascade
+     */
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "level_seq")
     private Level level;
 
+    /*
+     * social은 member에 종속적이므로 cascade
+     */
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "social_seq")
     private Social social;

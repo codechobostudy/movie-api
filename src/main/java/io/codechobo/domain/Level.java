@@ -1,5 +1,8 @@
 package io.codechobo.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 
@@ -7,15 +10,18 @@ import javax.persistence.*;
  * Created by Loustler on 8/7/16.
  */
 @Entity(name = "member_level")
+@Getter
+@Setter
 public class Level {
     /*
      * 레벨과 멤버는 1:1 관계, FK역할을 해야 하는데 어떻게?
      * member에 Level을 ? Level에 member를? Level은 member에 종속적? 레벨이 없는 멤버는 없다 멤버가 없는 레벨은?
      * 도메인 한개에 다 넣기에는 ... 부적절한 것으로 보임
+     * sequence에 대하여 update는 못하게 막음
      */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "level_seq", insertable = false, updatable = false)
+    @Column(name = "level_seq", updatable = false)
     private Integer seq;
 
     @Column(name = "level_point")
@@ -31,26 +37,24 @@ public class Level {
     @Column(name = "level_level")
     private String level;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    /*
+     * level에 존재하려면 member가 있어야 하므로 member와 상호 association
+     */
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "member_seq")
     private Member member;
 
-    @PrePersist
-    public String getLevel() {
+    @PreUpdate
+    public void preUpdateLevel() {
         /*
          * Level 가져올 때 레벨에 포인트 산정해서 레벨 매기기
          * Enum? If?
+         * 포인트별 계급 임시셋팅
          */
-        if(this.point < 100) this.level = "basic";
-        else if(this.point >= 100 && this.point < 200) this.level = "standard";
-        else if(this.point >= 200 && this.point < 500) this.level = "vip";
-        else this.level = "vvip";
-
-        return level;
-    }
-
-    public Integer getPoint() {
-        return point;
+        if(point < 100) level = "basic";
+        else if(point >= 100 && point < 200) level = "standard";
+        else if(point >= 200 && point < 500) level = "vip";
+        else level = "vvip";
     }
 
 }
