@@ -1,7 +1,4 @@
-package io.codechobo.domain;
-
-import lombok.Getter;
-import lombok.Setter;
+package io.codechobo.domain.member;
 
 import javax.persistence.*;
 
@@ -9,8 +6,6 @@ import javax.persistence.*;
  * Created by Loustler on 8/7/16.
  */
 @Entity(name = "member_social")
-@Getter
-@Setter
 public class Social {
 
     @Id
@@ -27,5 +22,20 @@ public class Social {
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "member_seq")
     private Member member;
+
+    public Social() {}
+    public Social(Member member, String type, String token) {
+        this.member = member;
+        this.type = type;
+        this.token = token;
+    }
+
+    public void setType(String type) {this.type = type;}
+    public void setToken(String token) {this.token = token;}
+    public void setMember(Member member) {this.member = member;}
+
+    public String getType() {return this.type;}
+    public String getToken() {return this.token;}
+    public Member getMember() {return this.member;}
 
 }

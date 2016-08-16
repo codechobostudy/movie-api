@@ -1,17 +1,11 @@
-package io.codechobo.domain;
-
-import lombok.Getter;
-import lombok.Setter;
+package io.codechobo.domain.member;
 
 import javax.persistence.*;
-
 
 /**
  * Created by Loustler on 8/7/16.
  */
 @Entity(name = "member_level")
-@Getter
-@Setter
 public class Level {
     /*
      * 레벨과 멤버는 1:1 관계, FK역할을 해야 하는데 어떻게?
@@ -56,5 +50,16 @@ public class Level {
         else if(point >= 200 && point < 500) level = "vip";
         else level = "vvip";
     }
+
+    public Level() {}
+    public Level(Integer point) {
+        this.point = point;
+        preUpdateLevel();
+    }
+
+    public void setPoint(Integer point) {this.point = point;}
+
+    public String getLevel() {return this.level;}
+    public Integer getPoint() {return this.point;}
 
 }
