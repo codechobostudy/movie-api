@@ -16,7 +16,7 @@ public class Screen {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    private ScreenType screenType;
+    private MovieType availableMovieType;
 
     @JsonIgnore
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -27,8 +27,8 @@ public class Screen {
     @JoinColumn(name = "seat_id")
     private Seat seat;
 
-    public Screen(ScreenType screenType, Theater theater, Seat seat) {
-        this.screenType = screenType;
+    public Screen(MovieType availableMovieType, Theater theater, Seat seat) {
+        this.availableMovieType = availableMovieType;
         this.theater = theater;
         this.seat = seat;
     }

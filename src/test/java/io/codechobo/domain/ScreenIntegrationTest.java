@@ -40,7 +40,7 @@ public class ScreenIntegrationTest extends EntityIntegrationTestHelper {
     public void 스크린정보_등록시_극장정보_좌석정보_등록() {
 
         //given
-        Screen screen = new Screen(ScreenType.IMAX, saveTheater, saveSeat);
+        Screen screen = new Screen(MovieType.IMAX, saveTheater, saveSeat);
 
         //when
         Screen saveScreen = screenRepository.save(screen);
