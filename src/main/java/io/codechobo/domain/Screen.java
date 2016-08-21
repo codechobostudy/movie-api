@@ -27,11 +27,6 @@ public class Screen {
     @JoinColumn(name = "seat_id")
     private Seat seat;
 
-    public Screen(ScreenType screenType, Theater theater) {
-        this.screenType = screenType;
-        this.theater = theater;
-    }
-
     public Screen(ScreenType screenType, Theater theater, Seat seat) {
         this.screenType = screenType;
         this.theater = theater;

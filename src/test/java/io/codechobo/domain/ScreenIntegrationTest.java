@@ -37,21 +37,7 @@ public class ScreenIntegrationTest extends EntityIntegrationTestHelper {
     }
 
     @Test
-    public void 스크린정보_등록시_극장아이디_등록() {
-
-        //given
-        Screen screen = new Screen(ScreenType.SCREEN_X, saveTheater);
-
-        //when
-        Screen saveScreen = screenRepository.save(screen);
-
-        //then
-        assertNotNull(saveScreen.getId());
-        assertThat(saveScreen.getTheater().getName(), is("name"));
-    }
-
-    @Test
-    public void 스크린정보_등록시_좌석정보_등록() {
+    public void 스크린정보_등록시_극장정보_좌석정보_등록() {
 
         //given
         Screen screen = new Screen(ScreenType.IMAX, saveTheater, saveSeat);
@@ -61,6 +47,7 @@ public class ScreenIntegrationTest extends EntityIntegrationTestHelper {
 
         //then
         assertNotNull(saveScreen.getId());
+        assertThat(saveScreen.getTheater().getName(), is("name"));
         assertThat(saveScreen.getSeat().getSeats().length, is(6));
     }
 
