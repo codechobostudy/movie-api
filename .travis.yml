@@ -4,6 +4,9 @@ jdk:
 script: "mvn -P daily-build clean compile cobertura:cobertura"
 env:
   - TERM=dumb
+cache:
+  directories:
+    - $HOME/.m2
 after_success:
   - mvn -P daily-build coveralls:report
 notifications:
