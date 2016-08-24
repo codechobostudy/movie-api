@@ -45,6 +45,9 @@ public class Entry {
     @JoinColumn(name = "WIN_ID", insertable = false, updatable = false)
     private Winning winning;
 
+    protected Entry() {
+    }
+
     public Entry(Event event, Member member) {
         this.event = event;
         this.member = member;

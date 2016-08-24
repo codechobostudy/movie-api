@@ -1,7 +1,6 @@
 package io.codechobo.domain.event;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,7 +19,6 @@ import java.util.List;
  */
 @Entity
 @Getter
-@NoArgsConstructor
 public class EventCategory {
 
     @Id @GeneratedValue
@@ -31,6 +29,9 @@ public class EventCategory {
 
     @OneToMany(mappedBy = "cateogry", fetch = FetchType.LAZY)
     private List<Event> events = new ArrayList<>();
+
+    protected EventCategory() {
+    }
 
     public EventCategory(String name) {
         this.name = name;

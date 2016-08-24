@@ -1,7 +1,6 @@
 package io.codechobo.domain.event;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,7 +26,6 @@ import java.util.List;
  */
 @Entity
 @Getter
-@NoArgsConstructor
 public class Event {
 
     @Id @GeneratedValue
@@ -56,6 +54,9 @@ public class Event {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
+
+    protected Event() {
+    }
 
     public Event(String name, String description, String resourceUrl,
                  EventCategory category, Date startDate, Date endDate) {
