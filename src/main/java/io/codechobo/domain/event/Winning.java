@@ -35,12 +35,12 @@ public class Winning {
     private Long id;
 
     @OneToMany
-    private List<Entry> entries = new ArrayList<>();
+    private List<Joining> eventJoins = new ArrayList<>();
 
-    public void addEntry(Entry entry) {
-        this.entries.add(entry);
-        if (entry.getWinning() != this) {
-            entry.setWinning(this);
+    public void addEventJoin(Joining joining) {
+        this.eventJoins.add(joining);
+        if (joining.getWinning() != this) {
+            joining.setWinning(this);
         }
     }
 }

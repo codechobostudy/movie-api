@@ -44,7 +44,7 @@ public class Event {
     private EventCategory category;
 
     @OneToMany(mappedBy = "event", fetch = FetchType.LAZY)
-    private List<Entry> eventEntries = new ArrayList<>();
+    private List<Joining> eventJoins = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private EventStatus status;
@@ -68,10 +68,10 @@ public class Event {
         this.endDate = endDate;
     }
 
-    public void addEntry(Entry entry) {
-        this.eventEntries.add(entry);
-        if (entry.getEvent() != this) {
-            entry.setEvent(this);
+    public void addEventJoin(Joining joining) {
+        this.eventJoins.add(joining);
+        if (joining.getEvent() != this) {
+            joining.setEvent(this);
         }
     }
 

@@ -2,7 +2,6 @@ package io.codechobo.domain.event;
 
 import io.codechobo.domain.member.Member;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,8 +22,7 @@ import java.util.Date;
  */
 @Entity
 @Getter
-@NoArgsConstructor
-public class Entry {
+public class Joining {
 
     @Id @GeneratedValue
     @Column(name = "ENTRY_ID")
@@ -45,25 +43,25 @@ public class Entry {
     @JoinColumn(name = "WIN_ID", insertable = false, updatable = false)
     private Winning winning;
 
-    protected Entry() {
+    protected Joining() {
     }
 
-    public Entry(Event event, Member member) {
+    public Joining(Event event, Member member) {
         this.event = event;
         this.member = member;
     }
 
     public void setEvent(Event event) {
         this.event = event;
-        if (!event.getEventEntries().contains(this)) {
-            event.getEventEntries().add(this);
+        if (!event.getEventJoins().contains(this)) {
+            event.getEventJoins().add(this);
         }
     }
 
     public void setWinning(Winning winning) {
         this.winning = winning;
-        if (!winning.getEntries().contains(this)) {
-            winning.getEntries().add(this);
+        if (!winning.getEventJoins().contains(this)) {
+            winning.getEventJoins().add(this);
         }
     }
 }
