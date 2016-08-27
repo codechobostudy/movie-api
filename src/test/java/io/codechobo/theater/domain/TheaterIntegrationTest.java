@@ -1,19 +1,25 @@
 package io.codechobo.theater.domain;
 
 
-import helper.EntityIntegrationTestHelper;
 import io.codechobo.theater.domain.repository.TheaterRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
-public class TheaterIntegrationTest extends EntityIntegrationTestHelper {
+@RunWith(SpringRunner.class)
+@DataJpaTest
+@ActiveProfiles(profiles = "test")
+public class TheaterIntegrationTest {
 
     @Autowired
     private TheaterRepository theaterRepository;
