@@ -1,4 +1,4 @@
-package io.codechobo.domain;
+package io.codechobo.theater.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,8 +1,8 @@
-package io.codechobo.domain;
+package io.codechobo.theater.domain;
 
 
 import helper.EntityIntegrationTestHelper;
-import io.codechobo.domain.repository.TheaterRepository;
+import io.codechobo.theater.domain.repository.TheaterRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

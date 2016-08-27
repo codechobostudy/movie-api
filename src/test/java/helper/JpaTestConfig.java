@@ -8,8 +8,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableAutoConfiguration
-@EnableJpaRepositories("io.codechobo.domain.repository")
-@EntityScan("io.codechobo.domain")
+@EnableJpaRepositories("io.codechobo.theater.domain.repository")
+@EntityScan("io.codechobo.theater.domain")
 @EnableTransactionManagement
 public class JpaTestConfig {
 }
