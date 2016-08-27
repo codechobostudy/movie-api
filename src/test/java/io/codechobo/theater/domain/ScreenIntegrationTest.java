@@ -1,18 +1,24 @@
 package io.codechobo.theater.domain;
 
-import helper.EntityIntegrationTestHelper;
 import io.codechobo.theater.domain.repository.ScreenRepository;
 import io.codechobo.theater.domain.repository.SeatRepository;
 import io.codechobo.theater.domain.repository.TheaterRepository;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
-public class ScreenIntegrationTest extends EntityIntegrationTestHelper {
+@RunWith(SpringRunner.class)
+@DataJpaTest
+@ActiveProfiles(profiles = "test")
+public class ScreenIntegrationTest {
 
     @Autowired
     private TheaterRepository theaterRepository;
@@ -56,8 +62,9 @@ public class ScreenIntegrationTest extends EntityIntegrationTestHelper {
         Theater theater = new Theater("name", "location");
         return theaterRepository.save(theater);
     }
+
     private Seat createSeatFixture() {
-        int[] seats = {0,1,1,1,1,0};
+        int[] seats = {0, 1, 1, 1, 1, 0};
         Seat seat = new Seat(seats);
         return seatRepository.save(seat);
     }
