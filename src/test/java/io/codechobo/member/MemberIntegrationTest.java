@@ -1,25 +1,27 @@
-package io.codechobo.domain;
+package io.codechobo.member;
 
-import helper.EntityIntegrationTestHelper;
-import io.codechobo.domain.member.Member;
-import io.codechobo.domain.member.PointPerLevel;
-import io.codechobo.domain.member.repository.MemberRepository;
+import io.codechobo.member.domain.Member;
+import io.codechobo.member.domain.PointPerLevel;
+import io.codechobo.member.domain.repository.MemberRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.is;
 
-import java.util.List;
-
-/**
- * Created by Loustler on 8/21/16.
- */
-public class MemberIntegrationTest extends EntityIntegrationTestHelper {
-    @Autowired MemberRepository memberRepository;
+@RunWith(SpringRunner.class)
+@DataJpaTest
+@ActiveProfiles(value = "test")
+public class MemberIntegrationTest {
+    @Autowired
+    MemberRepository memberRepository;
 
     private Member member;
 
@@ -94,7 +96,7 @@ public class MemberIntegrationTest extends EntityIntegrationTestHelper {
     }
 
     @Test
-    public void 예매등의행위로_포인트증가_increase_point(){
+    public void 예매등의행위로_포인트증가_increase_point() {
         this.member.increasePoint();
         this.member = memberRepository.save(this.member);
 

@@ -1,6 +1,6 @@
-package io.codechobo.domain.event;
+package io.codechobo.event.domain;
 
-import io.codechobo.domain.member.Member;
+import io.codechobo.member.domain.Member;
 import lombok.Getter;
 
 import javax.persistence.Column;

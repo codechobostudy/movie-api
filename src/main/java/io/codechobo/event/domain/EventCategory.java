@@ -1,4 +1,4 @@
-package io.codechobo.domain.event;
+package io.codechobo.event.domain;
 
 import lombok.Getter;
 
@@ -27,7 +27,7 @@ public class EventCategory {
 
     private String name;
 
-    @OneToMany(mappedBy = "cateogry", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Event> events = new ArrayList<>();
 
     protected EventCategory() {

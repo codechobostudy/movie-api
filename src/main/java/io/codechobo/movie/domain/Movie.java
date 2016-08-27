@@ -1,12 +1,8 @@
-package io.codechobo.domain;
+package io.codechobo.movie.domain;
 
 import lombok.Getter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,12 +38,14 @@ public class Movie {
 	private Date releaseDate;
 
 
+	@Transient // 해당 타입으로 에러 발생해서 잠시 도메인 생성시 제외처리
 	/**
 	 * 감독
 	 */
 	//TODO 별도의 타입으로?
 	private List<String> diretors = new ArrayList<>();
 
+	@Transient // 해당 타입으로 에러 발생해서 잠시 도메인 생성시 제외처리
 	/**
 	 * 배우
 	 */

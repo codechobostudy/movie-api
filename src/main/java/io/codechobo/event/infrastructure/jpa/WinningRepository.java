@@ -1,6 +1,6 @@
-package io.codechobo.infrastructure.jpa;
+package io.codechobo.event.infrastructure.jpa;
 
-import io.codechobo.domain.event.Winning;
+import io.codechobo.event.domain.Winning;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

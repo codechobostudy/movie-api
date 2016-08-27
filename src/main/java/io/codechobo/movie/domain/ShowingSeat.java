@@ -1,5 +1,6 @@
-package io.codechobo.domain;
+package io.codechobo.movie.domain;
 
+import io.codechobo.theater.domain.Seat;
 import lombok.Getter;
 
 import javax.persistence.Entity;

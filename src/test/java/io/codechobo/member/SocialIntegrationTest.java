@@ -1,30 +1,34 @@
-package io.codechobo.domain;
+package io.codechobo.member;
 
-import helper.EntityIntegrationTestHelper;
-import io.codechobo.domain.member.Member;
-import io.codechobo.domain.member.Social;
-import io.codechobo.domain.member.repository.MemberRepository;
-import io.codechobo.domain.member.repository.SocialRepository;
-import org.junit.After;
+import io.codechobo.member.domain.Member;
+import io.codechobo.member.domain.Social;
+import io.codechobo.member.domain.repository.MemberRepository;
+import io.codechobo.member.domain.repository.SocialRepository;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.is;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * Created by Loustler on 8/21/16.
- */
-public class SocialIntegrationTest extends EntityIntegrationTestHelper {
-    @Autowired private SocialRepository socialRepository;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
-    @Autowired private MemberRepository memberRepository;
+@RunWith(SpringRunner.class)
+@DataJpaTest
+@ActiveProfiles(value = "test")
+public class SocialIntegrationTest {
+    @Autowired
+    private SocialRepository socialRepository;
+
+    @Autowired
+    private MemberRepository memberRepository;
 
     private Member member;
     private Social social;
@@ -62,7 +66,8 @@ public class SocialIntegrationTest extends EntityIntegrationTestHelper {
         this.member.getSocials().add(result);
 
         Iterator<Social> socialIterator = this.member.getSocials().iterator();
-        while(socialIterator.hasNext()) assertThat(socialIterator.next().getMember().getSeq(), is(this.member.getSeq()));
+        while (socialIterator.hasNext())
+            assertThat(socialIterator.next().getMember().getSeq(), is(this.member.getSeq()));
     }
 
     @Test

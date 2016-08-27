@@ -1,4 +1,4 @@
-package io.codechobo.domain.event;
+package io.codechobo.event.domain;
 
 import lombok.Getter;
 

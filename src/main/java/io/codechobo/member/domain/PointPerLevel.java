@@ -1,4 +1,4 @@
-package io.codechobo.domain.member;
+package io.codechobo.member.domain;
 
 import lombok.Getter;
 
