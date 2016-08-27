@@ -1,7 +1,6 @@
-package io.codechobo.domain;
+package io.codechobo.theater.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
