@@ -1,5 +1,6 @@
 package io.codechobo.theater.domain;
 
+import io.codechobo.theater.domain.support.TheaterDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,6 +25,12 @@ public class Theater {
     public Theater(String name, String location) {
         this.name = name;
         this.location = location;
+    }
+
+    public Theater(TheaterDto theaterDto) {
+        this.id = theaterDto.getId();
+        this.name = theaterDto.getName();
+        this.location = theaterDto.getLocation();
     }
 
     public void addScreen(Screen screen) {
