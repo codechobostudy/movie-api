@@ -1,9 +1,8 @@
 package io.codechobo.member;
 
-import io.codechobo.member.domain.Member;
 import io.codechobo.member.domain.Social;
-import io.codechobo.member.domain.repository.MemberRepository;
-import io.codechobo.member.domain.repository.SocialRepository;
+import io.codechobo.member.repository.MemberRepository;
+import io.codechobo.member.repository.SocialRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

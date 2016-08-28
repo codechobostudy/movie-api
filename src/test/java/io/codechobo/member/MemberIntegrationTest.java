@@ -1,8 +1,7 @@
 package io.codechobo.member;
 
-import io.codechobo.member.domain.Member;
 import io.codechobo.member.domain.PointPerLevel;
-import io.codechobo.member.domain.repository.MemberRepository;
+import io.codechobo.member.repository.MemberRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
