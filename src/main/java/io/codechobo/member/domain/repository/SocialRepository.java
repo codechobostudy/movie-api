@@ -1,4 +1,4 @@
-package io.codechobo.member.repository;
+package io.codechobo.member.domain.repository;
 
 import io.codechobo.member.domain.Social;
 import org.springframework.data.jpa.repository.JpaRepository;
