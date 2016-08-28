@@ -1,4 +1,4 @@
-package io.codechobo.event.infrastructure.jpa;
+package io.codechobo.event.domain.repository;
 
 import io.codechobo.event.domain.Joining;
 import org.springframework.data.jpa.repository.JpaRepository;
