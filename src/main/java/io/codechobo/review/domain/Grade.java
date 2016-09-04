@@ -1,16 +1,20 @@
 package io.codechobo.review.domain;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
-
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Grade {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-
-    @OneToOne(mappedBy = "review", fetch = FetchType.LAZY)
-    private Long reviewId;
 
     private String memberId;
 

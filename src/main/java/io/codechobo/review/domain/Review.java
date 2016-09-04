@@ -1,6 +1,7 @@
 package io.codechobo.review.domain;;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -8,6 +9,7 @@ import java.util.Date;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 public class Review {
 
@@ -18,16 +20,25 @@ public class Review {
     @Temporal(TemporalType.DATE)
     private Date regDate;
 
-    private Long likeCount;
+    private int likeCount;
 
-    private Long hateCount;
+    private int hateCount;
 
-    private String review;
+    private String reviewContent;
 
-    private String movieId;
+    private Long movieId;
 
     private String memberId;
 
 
+    public Review(int likeCount, int hateCount, String reviewContent, Long movieId, String memberId){
+        //this.id=id;
+        this.regDate=new Date();
+        this.likeCount=likeCount;
+        this.hateCount=hateCount;
+        this.reviewContent=reviewContent;
+        this.movieId=movieId;
+        this.memberId=memberId;
+    }
 
 }
