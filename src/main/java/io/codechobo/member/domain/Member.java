@@ -67,7 +67,7 @@ public class Member {
     /*
      * social은 member에 종속적이므로 cascade
      */
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "SOCIAL_SEQ")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "member")
     private List<Social> socials;
 
     public Member(MemberDto memberDto) {

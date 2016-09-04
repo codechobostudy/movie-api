@@ -17,33 +17,28 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 8/29/16
  */
 @RestController
-@RequestMapping("/api/members")
+@RequestMapping("/api/member")
 public class MemberRestController {
     @Autowired private MemberRepository memberRepository;
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = {"","/"}, method = RequestMethod.POST)
     public ResponseEntity save(@RequestBody MemberDto member) {
-        return new ResponseEntity(this.memberRepository.save(new Member(member)), HttpStatus.OK);
+        return new ResponseEntity<>(this.memberRepository.save(new Member(member)), HttpStatus.CREATED);
     }
 
-    /*
-     *  User infomation 처리
-     *  Spring Security?
-     *  @changwha 요청
-     */
     @RequestMapping(value = "/{seq}", method = RequestMethod.POST)
-    public ResponseEntity show() {
-        return new ResponseEntity(new Object(), HttpStatus.OK);
+    public ResponseEntity show(@PathVariable Long seq) {
+        return new ResponseEntity<>(memberRepository.findOne(seq), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ResponseEntity list() {
-        return new ResponseEntity(this.memberRepository.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(this.memberRepository.findAll(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{seq}", method = RequestMethod.PUT)
     public ResponseEntity update(@PathVariable Long seq, @RequestBody MemberDto memberDto) {
-        return new ResponseEntity(this.memberRepository.save(new Member(memberDto)), HttpStatus.OK);
+        return new ResponseEntity<>(this.memberRepository.save(new Member(memberDto)), HttpStatus.OK);
     }
 
 

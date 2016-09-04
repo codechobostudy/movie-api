@@ -1,7 +1,5 @@
 package io.codechobo.member.domain;
 
-import io.codechobo.member.domain.Member;
-import io.codechobo.member.domain.Social;
 import io.codechobo.member.domain.repository.MemberRepository;
 import io.codechobo.member.domain.repository.SocialRepository;
 import io.codechobo.member.domain.support.MemberDto;
@@ -23,7 +21,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@ActiveProfiles(value = "test")
+@ActiveProfiles(profiles = "test")
 public class SocialIntegrationTest {
     @Autowired
     private SocialRepository socialRepository;
@@ -110,6 +108,7 @@ public class SocialIntegrationTest {
         memberDto.setEmail("email@provider.com");
         memberDto.setPoint(new Integer(0));
         memberDto.setSocials(null);
+
         return memberRepository.save(new Member(memberDto));
     }
 

@@ -34,7 +34,7 @@ public class Social {
     @Column(name = "SOCIAL_ACCESS_TOKEN")
     private String token; // accessToken 등 token정보
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "MEMBER_SEQ")
     private Member member;
 
