@@ -1,5 +1,6 @@
 package io.codechobo.event.domain;
 
+import io.codechobo.event.interfaces.api.support.EventDto;
 import lombok.Getter;
 
 import javax.persistence.Column;
@@ -46,6 +47,9 @@ public class Event {
     @OneToMany(mappedBy = "event", fetch = FetchType.LAZY)
     private List<Joining> eventJoins = new ArrayList<>();
 
+    @OneToMany(mappedBy = "event", fetch = FetchType.LAZY)
+    private List<Winning> eventWins = new ArrayList<>();
+
     @Enumerated(EnumType.STRING)
     private EventStatus status;
 
@@ -68,10 +72,28 @@ public class Event {
         this.endDate = endDate;
     }
 
+    public Event(EventDto eventDto) {
+        this.id = eventDto.getId();
+        this.name = eventDto.getName();
+        this.description = eventDto.getDescription();
+        this.resourceUrl = eventDto.getResourceUrl();
+        this.category = eventDto.getCategory();
+        this.startDate = eventDto.getStartDate();
+        this.endDate = eventDto.getEndDate();
+        this.status = EventStatus.OPEN;
+    }
+
     public void addEventJoin(Joining joining) {
         this.eventJoins.add(joining);
         if (joining.getEvent() != this) {
             joining.setEvent(this);
+        }
+    }
+
+    public void addEventWins(Winning winning) {
+        this.eventWins.add(winning);
+        if (winning.getEvent() != this) {
+            winning.setEvent(this);
         }
     }
 

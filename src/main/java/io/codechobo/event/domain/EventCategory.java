@@ -1,5 +1,6 @@
 package io.codechobo.event.domain;
 
+import io.codechobo.event.interfaces.api.support.EventCategoryDto;
 import lombok.Getter;
 
 import javax.persistence.Column;
@@ -35,6 +36,11 @@ public class EventCategory {
 
     public EventCategory(String name) {
         this.name = name;
+    }
+
+    public EventCategory(EventCategoryDto eventCategoryDto) {
+        this.id = eventCategoryDto.getId();
+        this.name = eventCategoryDto.getName();
     }
 
     public void addEvent(Event event) {

@@ -1,14 +1,20 @@
 package io.codechobo.event.domain;
 
+import io.codechobo.event.interfaces.api.support.WinningDto;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,28 +25,48 @@ import java.util.List;
  */
 @Entity
 @Getter
-@NoArgsConstructor
 public class Winning {
-
-    /*
-     * TODO: 당첨 엔티티 정의 재검토
-     * 이벤트 당첨 객체의 역할은
-     * 응모자 객체 사이에서 당첨을 (0...*)를 추첨하고 그 당첨 정보를 가진다.
-     *
-     * 어떤 속성을 가져야 하고, 어떤 연관관계를 맺어야 할 지 다시 고민 필요
-     */
 
     @Id @GeneratedValue
     @Column(name = "WIN_ID")
     private Long id;
 
-    @OneToMany
-    private List<Joining> eventJoins = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "EVENT_ID")
+    private Event event;
 
-    public void addEventJoin(Joining joining) {
-        this.eventJoins.add(joining);
+    @Temporal(TemporalType.DATE)
+    private Date winningDate;
+
+    @OneToMany(mappedBy = "winning")
+    private List<Joining> joins = new ArrayList<>();
+
+
+    protected Winning() {
+    }
+
+    public Winning(Event event, Joining joining, Date winningDate) {
+        this.event = event;
+//        this.eventJoins.add(joining);
+        this.winningDate = winningDate;
+    }
+
+    public Winning(WinningDto winningDto) {
+        this.id = winningDto.getId();
+        this.winningDate = winningDto.getWinningDate();
+    }
+
+    public void addJoins(Joining joining) {
+        this.joins.add(joining);
         if (joining.getWinning() != this) {
             joining.setWinning(this);
+        }
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
+        if (!event.getEventJoins().contains(this)) {
+            event.getEventWins().add(this);
         }
     }
 }

@@ -5,6 +5,7 @@ import io.codechobo.event.domain.repository.EventRepository;
 import io.codechobo.event.domain.repository.JoiningRepository;
 import io.codechobo.member.domain.Member;
 import io.codechobo.member.domain.repository.MemberRepository;
+import io.codechobo.member.domain.support.MemberDto;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +19,7 @@ import java.util.Date;
 
 import static io.codechobo.event.domain.EventBuilder.anEvent;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 /**
  * @author Kj Nam
@@ -51,8 +52,8 @@ public class JoiningIntegrationTest {
 
     @Before
     public void setUp() {
-        member1 = new Member("member1", "password", "닉네임1", "이메일1@gmail.com", new Integer(0), null);
-        member2 = new Member("member2", "password", "닉네임2", "이메일2@gmail.com", new Integer(0), null);
+        member1 = new Member(new MemberDto("member1", "password", "이메일1@gmail.com", "닉네임1"));
+        member2 = new Member(new MemberDto("member2", "password", "이메일2@gmail.com", "닉네임2"));
         memberRepository.save(member1);
         memberRepository.save(member2);
 
@@ -80,8 +81,8 @@ public class JoiningIntegrationTest {
     @Test
     public void 한_이벤트_여려명_응모() {
         //given
-        joining1 = new Joining(anEvent, member1);
-        joining2 = new Joining(anEvent, member2);
+        joining1 = new Joining(anEvent, member1, new Date());
+        joining2 = new Joining(anEvent, member2, new Date());
 
         //when
         joiningRepository.save(joining1);
@@ -94,10 +95,10 @@ public class JoiningIntegrationTest {
     @Test
     public void 한명이_여러_이벤트_응모() {
         //given
-        Event 새로운이벤트= eventBuilder.but().with이벤트명("새로운이벤트").build();
+        Event 새로운이벤트 = eventBuilder.but().with이벤트명("새로운이벤트").build();
         eventRepository.save(새로운이벤트);
-        joining1 = new Joining(anEvent, member1);
-        joining2 = new Joining(새로운이벤트, member1);
+        joining1 = new Joining(anEvent, member1, new Date());
+        joining2 = new Joining(새로운이벤트, member1, new Date());
 
         //when
         joiningRepository.save(joining1);
