@@ -1,4 +1,5 @@
 package io.codechobo.review.domain;;
+import io.codechobo.review.domain.support.ReviewDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +10,6 @@ import java.util.Date;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 public class Review {
 
@@ -31,8 +31,17 @@ public class Review {
     private String memberId;
 
 
-    public Review(int likeCount, int hateCount, String reviewContent, Long movieId, String memberId){
-        //this.id=id;
+    public Review(ReviewDto reviewDto){
+        this.id=reviewDto.getId();
+        this.regDate=new Date();
+        this.likeCount=reviewDto.getLikeCount();
+        this.hateCount=reviewDto.getHateCount();
+        this.reviewContent=reviewDto.getReviewContent();
+        this.movieId=reviewDto.getMovieId();
+        this.memberId=reviewDto.getMemberId();
+    }
+
+    public Review(String reviewContent, int likeCount, int hateCount, Long movieId, String memberId){
         this.regDate=new Date();
         this.likeCount=likeCount;
         this.hateCount=hateCount;
@@ -40,5 +49,4 @@ public class Review {
         this.movieId=movieId;
         this.memberId=memberId;
     }
-
 }
