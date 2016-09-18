@@ -2,14 +2,9 @@ package io.codechobo.movie.domain;
 
 import io.codechobo.theater.domain.Screen;
 import lombok.Getter;
+import lombok.experimental.Tolerate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,10 +18,16 @@ public class Showing {
 
 	@GeneratedValue
 	@Id
-	private Long no;
+	private Long id;
 
 	@ManyToOne
 	private Movie movie;
+
+	@ManyToOne
+	private Screen screen;
+
+	@OneToMany
+	private List<ShowingSeat> showingSeats = new ArrayList<>();
 
 	/**
 	 * 상영시작 시간
@@ -35,12 +36,18 @@ public class Showing {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date startTime;
 
+	@Tolerate
+	public Showing() {
+	}
 
-	@ManyToOne
-	private Screen screen;
+	public Showing(Movie movie, Screen screen, Date startTime) {
+		this.movie = movie;
+		this.startTime = startTime;
+		this.screen = screen;
+	}
 
-	@OneToMany(mappedBy = "showing")
-	private List<ShowingSeat> showingSeats = new ArrayList<>();
 
-
+	public void addShowingSeat(ShowingSeat showingSeat) {
+		this.showingSeats.add(showingSeat);
+	}
 }
