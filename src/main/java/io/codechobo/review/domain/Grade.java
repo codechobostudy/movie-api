@@ -3,6 +3,7 @@ package io.codechobo.review.domain;
 import javax.persistence.*;
 
 
+@Entity
 public class Grade {
 
     @Id
@@ -10,7 +11,7 @@ public class Grade {
     private Long id;
 
     @OneToOne(mappedBy = "review", fetch = FetchType.LAZY)
-    private Long reviewId;
+    private Review review;
 
     private String memberId;
 

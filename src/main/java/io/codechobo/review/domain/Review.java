@@ -22,7 +22,8 @@ public class Review {
 
     private Long hateCount;
 
-    private String review;
+    @OneToOne
+    private Review review;
 
     private String movieId;
 
