@@ -35,7 +35,7 @@ public class ShowingSeat {
         showing.addShowingSeat(this);
     }
 
-    public void ticket(Long memberId) {
+    public void book(Long memberId) {
         verifyBookingAvailable();
 
         this.state = ShowingSeatState.BOOKED;
