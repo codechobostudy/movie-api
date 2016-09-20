@@ -1,10 +1,11 @@
 package io.codechobo.member.domain;
 
 
+import io.codechobo.member.domain.support.MemberDto;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,12 +14,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +27,7 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
+@NoArgsConstructor
 public class Member {
 
     @Id
@@ -66,23 +66,18 @@ public class Member {
     /*
      * social은 member에 종속적이므로 cascade
      */
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "SOCIAL_SEQ")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "member")
     private List<Social> socials;
 
-    public Member(String id, String password, String nickName, String email, Integer point, ArrayList<Social> socials) {
-        this.id = id;
-        this.password = password;
-        this.nickName = nickName;
-        this.email = email;
-        this.point = point;
+    public Member(MemberDto memberDto) {
+        this.id = memberDto.getId();
+        this.password = memberDto.getPassword();
+        this.nickName = memberDto.getNickName();
+        this.email = memberDto.getEmail();
+        this.point = memberDto.getPoint();
         this.level = PointPerLevel.valueOf(this.point);
-        this.socials = socials;
-        this.registrationDate = new Date();
-    }
-
-    public void increasePoint() {
-        this.point++;
+        this.registrationDate = memberDto.getRegiDate();
+        this.socials = memberDto.getSocials();
     }
 
     @PrePersist

@@ -1,9 +1,8 @@
-package io.codechobo.member;
+package io.codechobo.member.domain;
 
-import io.codechobo.member.domain.Member;
-import io.codechobo.member.domain.Social;
 import io.codechobo.member.domain.repository.MemberRepository;
 import io.codechobo.member.domain.repository.SocialRepository;
+import io.codechobo.member.domain.support.MemberDto;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +21,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@ActiveProfiles(value = "test")
+@ActiveProfiles(profiles = "test")
 public class SocialIntegrationTest {
     @Autowired
     private SocialRepository socialRepository;
@@ -74,7 +73,14 @@ public class SocialIntegrationTest {
     public void 소셜가져오기_social_find() {
 
         // given
-        Member newMember = new Member("id1", "password2", "nickName3", "email@3.com", new Integer(0), new ArrayList<>());
+        MemberDto memberDto = new MemberDto();
+        memberDto.setId("id1");
+        memberDto.setPassword("password2");
+        memberDto.setSocials(null);
+        memberDto.setPoint(new Integer(0));
+        memberDto.setEmail("email@3.com");
+        memberDto.setNickName("nickName3");
+        Member newMember = new Member(memberDto);
 
         this.memberRepository.save(newMember);
 
@@ -95,8 +101,15 @@ public class SocialIntegrationTest {
     }
 
     private Member memberFactory() {
-        Member member = new Member("anyone", "password", "anonoymouse", "email@provider.com", new Integer(0), null);
-        return memberRepository.save(member);
+        MemberDto memberDto = new MemberDto();
+        memberDto.setId("anyone");
+        memberDto.setPassword("password");
+        memberDto.setNickName("anonoymouse");
+        memberDto.setEmail("email@provider.com");
+        memberDto.setPoint(new Integer(0));
+        memberDto.setSocials(null);
+
+        return memberRepository.save(new Member(memberDto));
     }
 
     private Social socialFactory() {

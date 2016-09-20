@@ -1,8 +1,7 @@
-package io.codechobo.member;
+package io.codechobo.member.domain;
 
-import io.codechobo.member.domain.Member;
-import io.codechobo.member.domain.PointPerLevel;
 import io.codechobo.member.domain.repository.MemberRepository;
+import io.codechobo.member.domain.support.MemberDto;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +17,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@ActiveProfiles(value = "test")
+@ActiveProfiles(profiles = "test")
 public class MemberIntegrationTest {
     @Autowired
     MemberRepository memberRepository;
@@ -43,10 +42,16 @@ public class MemberIntegrationTest {
     @Test
     public void 멤버생성_create_new_member() {
         // given
-        Member member = new Member("test", "password", "loustler2", "dev.loustler@gmail.com", new Integer(0), null);
+        MemberDto memberDto = new MemberDto();
+        memberDto.setId("test");
+        memberDto.setPassword("password");
+        memberDto.setNickName("loustler2");
+        memberDto.setEmail("dev.loustler@gmail.com");
+        memberDto.setPoint(new Integer(0));
+        memberDto.setSocials(null);
 
         //when
-        Member saveMember = memberRepository.save(member);
+        Member saveMember = memberRepository.save(new Member(memberDto));
 
         // then
         assertThat(saveMember.getLevel(), is(PointPerLevel.BASIC));
@@ -84,7 +89,15 @@ public class MemberIntegrationTest {
     @Test
     public void 멤버레벨업_level_up_member() {
         // given
-        Member newMember = new Member("any2", "password", "anonymouse2", "email2@gmail.com", new Integer(500), null);
+        MemberDto memberDto = new MemberDto();
+        memberDto.setId("any2");
+        memberDto.setPassword("password");
+        memberDto.setNickName("anonymouse2");
+        memberDto.setEmail("email2@gmail.com");
+        memberDto.setPoint(new Integer(500));
+        memberDto.setSocials(null);
+
+        Member newMember = new Member(memberDto);
 
         // when
         memberRepository.save(newMember);
@@ -97,12 +110,10 @@ public class MemberIntegrationTest {
 
     @Test
     public void 예매등의행위로_포인트증가_increase_point() {
-        this.member.increasePoint();
         this.member = memberRepository.save(this.member);
 
         assertThat(this.member.getPoint(), is(1));
 
-        this.member.increasePoint();
         this.memberRepository.save(this.member);
 
         this.member = this.memberRepository.findOne(this.member.getSeq());
@@ -111,7 +122,14 @@ public class MemberIntegrationTest {
     }
 
     private Member memberFactory() {
-        Member member = new Member("any1", "password", "anonymouse", "email@gmail.com", new Integer(0), null);
-        return memberRepository.save(member);
+        MemberDto memberDto = new MemberDto();
+        memberDto.setId("any1");
+        memberDto.setPassword("password");
+        memberDto.setNickName("anonymouse");
+        memberDto.setEmail("email@gmail.com");
+        memberDto.setPoint(new Integer(0));
+        memberDto.setSocials(null);
+
+        return memberRepository.save(new Member(memberDto));
     }
 }
