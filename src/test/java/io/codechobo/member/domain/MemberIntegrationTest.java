@@ -110,12 +110,10 @@ public class MemberIntegrationTest {
 
     @Test
     public void 예매등의행위로_포인트증가_increase_point() {
-        this.member.increasePoint();
         this.member = memberRepository.save(this.member);
 
         assertThat(this.member.getPoint(), is(1));
 
-        this.member.increasePoint();
         this.memberRepository.save(this.member);
 
         this.member = this.memberRepository.findOne(this.member.getSeq());
