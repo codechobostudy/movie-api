@@ -2,6 +2,7 @@ package io.codechobo.member.domain;
 
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.CascadeType;
@@ -28,6 +29,7 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
+@NoArgsConstructor
 public class Member {
 
     @Id
@@ -79,10 +81,6 @@ public class Member {
         this.level = PointPerLevel.valueOf(this.point);
         this.socials = socials;
         this.registrationDate = new Date();
-    }
-
-    public void increasePoint() {
-        this.point++;
     }
 
     @PrePersist
