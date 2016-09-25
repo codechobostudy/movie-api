@@ -56,6 +56,11 @@ public class Movie {
 
 
 	public Movie(final String title, final String genre, final Integer runningTime, final Date releaseDate) {
+		this(null, title, genre, runningTime, releaseDate);
+	}
+
+	public Movie(final Long no, final String title, final String genre, final Integer runningTime, final Date releaseDate) {
+		this.no = no;
 		this.title = title;
 		this.genre = genre;
 		this.runningTime = runningTime;
