@@ -1,25 +1,12 @@
 package io.codechobo.member.domain;
 
 
+import io.codechobo.member.domain.support.MemberDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import java.util.ArrayList;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
@@ -68,38 +55,22 @@ public class Member {
     /*
      * social은 member에 종속적이므로 cascade
      */
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "SOCIAL_SEQ")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "seq")
     private List<Social> socials;
 
-    public Member(String id, String password, String nickName, String email, Integer point, ArrayList<Social> socials) {
-        this.id = id;
-        this.password = password;
-        this.nickName = nickName;
-        this.email = email;
-        this.point = point;
-        this.level = PointPerLevel.valueOf(this.point);
-        this.socials = socials;
-        this.registrationDate = new Date();
+    public Member(final MemberDto memberDto) {
+        this.seq = memberDto.getSequence();
+        this.id = memberDto.getId();
+        this.password = memberDto.getPassword();
+        this.nickName = memberDto.getNickName();
+        this.email = memberDto.getEmail();
+        this.point = memberDto.getPoint();
+        this.level = memberDto.getLevel();
+        this.registrationDate = memberDto.getRegiDate();
     }
 
     @PrePersist
     public void tmpLevelPersist() {
         this.level = PointPerLevel.valueOf(this.point);
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder("[");
-        builder.append("sequence : "+this.seq)
-                .append(", id : "+this.id)
-                .append(", password : "+this.password)
-                .append(", nickName : "+this.nickName)
-                .append(", email : "+this.email)
-                .append(", point : "+this.point)
-                .append(", level : "+this.level)
-                .append("]");
-
-        return builder.toString();
     }
 }

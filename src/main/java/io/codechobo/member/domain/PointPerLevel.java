@@ -20,9 +20,6 @@ public enum PointPerLevel {
         this.max = max;
     }
 
-    public int getMin() {return this.min;}
-    public int getMax() {return this.max;}
-
     public static PointPerLevel valueOf(int point) {
         if(0 <= point && point < 100) return BASIC;
         else if(100 <= point && point < 200) return STANDARD;
