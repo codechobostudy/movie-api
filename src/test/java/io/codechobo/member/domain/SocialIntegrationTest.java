@@ -35,7 +35,7 @@ public class SocialIntegrationTest {
     @Autowired
     private MemberRepository memberRepository;
 
-    protected Member member;
+    private Member member;
     private Social social;
 
     private Date now;
