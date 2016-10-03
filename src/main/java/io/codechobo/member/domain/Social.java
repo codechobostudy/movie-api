@@ -1,6 +1,7 @@
 package io.codechobo.member.domain;
 
 
+import io.codechobo.member.domain.support.SocialDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,15 +39,9 @@ public class Social {
     @JoinColumn(name = "MEMBER_SEQ")
     private Member member;
 
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder("[");
-        builder.append("seq : "+this.seq)
-                .append(", type : "+this.type)
-                .append(", token : "+this.token)
-                .append(", member : "+this.member)
-                .append("]");
-
-        return builder.toString();
+    public Social(final SocialDto socialDto) {
+        this.seq = socialDto.getSequence();
+        this.type = socialDto.getType();
+        this.token = socialDto.getToken();
     }
 }

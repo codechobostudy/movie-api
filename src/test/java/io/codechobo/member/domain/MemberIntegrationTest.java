@@ -1,8 +1,7 @@
-package io.codechobo.member;
+package io.codechobo.member.domain;
 
-import io.codechobo.member.domain.Member;
-import io.codechobo.member.domain.PointPerLevel;
 import io.codechobo.member.domain.repository.MemberRepository;
+import io.codechobo.member.domain.support.MemberDto;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,10 +11,16 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Calendar;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
+/**
+ * @author loustler
+ * @since 10/02/2016 10:21
+ */
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @ActiveProfiles(value = "test")
@@ -36,14 +41,12 @@ public class MemberIntegrationTest {
     }
 
     @Test
-    public void 설정확인_config_test() {
-        System.out.println(this.member);
-    }
+    public void 설정확인_config_test() {}
 
     @Test
     public void 멤버생성_create_new_member() {
         // given
-        Member member = new Member("test", "password", "loustler2", "dev.loustler@gmail.com", new Integer(0), null);
+        Member member = new Member(new MemberDto("test", "password", "dev.loustler@gmail.com", "loustler", Calendar.getInstance().getTime(), new Integer(0)));
 
         //when
         Member saveMember = memberRepository.save(member);
@@ -84,7 +87,7 @@ public class MemberIntegrationTest {
     @Test
     public void 멤버레벨업_level_up_member() {
         // given
-        Member newMember = new Member("any2", "password", "anonymouse2", "email2@gmail.com", new Integer(500), null);
+        Member newMember = new Member(new MemberDto("any2", "password", "email2@gmail.com", "anonymouse2", Calendar.getInstance().getTime(), new Integer(500)));
 
         // when
         memberRepository.save(newMember);
@@ -111,7 +114,7 @@ public class MemberIntegrationTest {
     }
 
     private Member memberFactory() {
-        Member member = new Member("any1", "password", "anonymouse", "email@gmail.com", new Integer(0), null);
+        Member member = new Member(new MemberDto("any1", "password", "email@gmail.com", "anonymouse", Calendar.getInstance().getTime(), new Integer(0)));
         return memberRepository.save(member);
     }
 }
