@@ -1,6 +1,7 @@
 package io.codechobo.movie.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class Movie {
 
 	@GeneratedValue
@@ -51,6 +53,20 @@ public class Movie {
 	 */
 	//TODO 별도의 타입으로?
 	private List<String> actors = new ArrayList<>();
+
+
+	public Movie(final String title, final String genre, final Integer runningTime, final Date releaseDate) {
+		this(null, title, genre, runningTime, releaseDate);
+	}
+
+	public Movie(final Long no, final String title, final String genre, final Integer runningTime, final Date releaseDate) {
+		this.no = no;
+		this.title = title;
+		this.genre = genre;
+		this.runningTime = runningTime;
+		this.releaseDate = releaseDate;
+	}
+
 
 	//TODO 영화타입 or 상영타입 or 스크린타입
 	public enum MovieType {
