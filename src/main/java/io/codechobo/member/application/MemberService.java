@@ -5,6 +5,7 @@ import io.codechobo.member.domain.PointPerLevel;
 import io.codechobo.member.domain.repository.MemberRepository;
 import io.codechobo.member.domain.support.MemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
 import java.util.Calendar;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
  * @author loustler
  * @since 10/02/2016 10:12
  */
+@Service
 public class MemberService {
     @Autowired
     private MemberRepository memberRepository;
