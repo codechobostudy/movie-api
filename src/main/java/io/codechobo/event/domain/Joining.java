@@ -1,5 +1,6 @@
 package io.codechobo.event.domain;
 
+import io.codechobo.event.interfaces.api.support.JoiningDto;
 import io.codechobo.member.domain.Member;
 import lombok.Getter;
 
@@ -25,7 +26,7 @@ import java.util.Date;
 public class Joining {
 
     @Id @GeneratedValue
-    @Column(name = "ENTRY_ID")
+    @Column(name = "JOIN_ID")
     private Long id;
 
     @ManyToOne
@@ -33,20 +34,28 @@ public class Joining {
     private Member member;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date entryDate;
+    private Date joinDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "EVENT_ID")
     private Event event;
 
-    @ManyToOne
-    @JoinColumn(name = "WIN_ID", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "WIN_ID")
     private Winning winning;
 
     protected Joining() {
     }
 
-    public Joining(Event event, Member member) {
+    public Joining(Event event, Member member, Date joinDate) {
+        this.member = member;
+        this.event = event;
+        this.joinDate = joinDate;
+    }
+
+    public Joining(Event event, Member member, JoiningDto joiningDto) {
+        this.id = joiningDto.getId();
+        this.joinDate = joiningDto.getJoinDate();
         this.event = event;
         this.member = member;
     }
@@ -60,8 +69,8 @@ public class Joining {
 
     public void setWinning(Winning winning) {
         this.winning = winning;
-        if (!winning.getEventJoins().contains(this)) {
-            winning.getEventJoins().add(this);
+        if (!winning.getJoins().contains(this)) {
+            winning.getJoins().add(this);
         }
     }
 }
