@@ -4,7 +4,8 @@ import io.codechobo.member.domain.Social;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * Created by Loustler on 8/21/16.
+ * @author loustler
+ * @since 08/21/2016
  */
 public interface SocialRepository extends JpaRepository<Social, Long> {
 }

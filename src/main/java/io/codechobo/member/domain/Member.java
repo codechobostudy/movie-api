@@ -21,7 +21,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Loustler on 8/7/16.
+ * @author loustler
+ * @since  08/07/2016
  */
 @Entity
 @Setter

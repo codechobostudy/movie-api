@@ -6,6 +6,7 @@ import io.codechobo.member.domain.repository.MemberRepository;
 import io.codechobo.member.domain.support.MemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
 import java.util.Calendar;
@@ -21,6 +22,11 @@ public class MemberService {
     @Autowired
     private MemberRepository memberRepository;
 
+    /**
+     * Get mebmer list.
+     *
+     * @return MemberDto list
+     */
     public List<MemberDto> getMembers() {
         List<Member> member = memberRepository.findAll();
 
@@ -29,6 +35,12 @@ public class MemberService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Get one Member using member's sequence.
+     *
+     * @param sequence
+     * @return Null | MemberDto
+     */
     public MemberDto getMember(final Long sequence) {
         Member member = memberRepository.findOne(sequence);
 
@@ -37,6 +49,13 @@ public class MemberService {
         return new MemberDto(member.getSeq(), member.getId(), member.getPassword(), member.getEmail(), member.getNickName(), member.getRegistrationDate(), member.getPoint());
     }
 
+    /**
+     * Create member using memberDTO.
+     *
+     * @param memberDto
+     * @return MemberDto
+     */
+    @Transactional
     public MemberDto createMember(final MemberDto memberDto) {
         Member member = new Member(memberDto);
 
@@ -53,6 +72,14 @@ public class MemberService {
         return new MemberDto(member.getSeq(), member.getId(), member.getPassword(), member.getEmail(), member.getNickName(), member.getRegistrationDate(), member.getPoint());
     }
 
+    /**
+     * Update member using memberDTO.
+     *
+     * @param memberDto
+     * @return MemberDto
+     * @throws IllegalArgumentException in case member's sequence is null or member's member is not exist.
+     */
+    @Transactional
     public MemberDto updateMember(MemberDto memberDto) {
         if(memberDto.getSequence() == null || !memberRepository.exists(memberDto.getSequence())) {
             throw new IllegalArgumentException();
@@ -65,6 +92,13 @@ public class MemberService {
         return new MemberDto(member.getSeq(), member.getId(), member.getPassword(), member.getEmail(), member.getNickName(), member.getRegistrationDate(), member.getPoint());
     }
 
+    /**
+     * Delete member using member sequence.
+     *
+     * @param memberSequence
+     * @throws IllegalArgumentException in case member sequence is null.
+     */
+    @Transactional
     public void deleteMember(@NotNull final Long memberSequence) {
         if(memberSequence == null) {
             throw new IllegalArgumentException();

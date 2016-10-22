@@ -3,7 +3,11 @@ package io.codechobo.member.application;
 import io.codechobo.member.domain.PointPerLevel;
 import io.codechobo.member.domain.support.MemberDto;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Calendar;
 
@@ -16,6 +20,9 @@ import static org.junit.Assert.assertThat;
  * @author loustler
  * @since 10/02/2016 10:19
  */
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@ActiveProfiles(value = "test")
 public class MemberServiceIntegrationTest {
     @Autowired
     MemberService memberService;

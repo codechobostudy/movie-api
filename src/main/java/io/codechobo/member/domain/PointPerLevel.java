@@ -3,7 +3,8 @@ package io.codechobo.member.domain;
 import lombok.Getter;
 
 /**
- * Created by Loustler on 8/16/16.
+ * @author loustler
+ * @since 08/16/2016
  */
 @Getter
 public enum PointPerLevel {

@@ -104,7 +104,6 @@ public class SocialIntegrationTest {
 
         Social find = this.socialRepository.findOne(social1.getSeq());
         System.out.println(find);
-
     }
 
     private Member memberFactory() {
