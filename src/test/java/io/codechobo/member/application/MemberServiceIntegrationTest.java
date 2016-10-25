@@ -42,7 +42,15 @@ public class MemberServiceIntegrationTest {
         final MemberDto dto = generateData();
         final MemberDto member = memberService.createMember(dto);
 
-        final MemberDto updateDto = new MemberDto(member.getSequence(), member.getId(), "another password", "loustler@gmail.com", "loustler", Calendar.getInstance().getTime(), new Integer(100));
+        final MemberDto updateDto = new MemberDto.Builder()
+                .sequence(member.getSequence())
+                .id(member.getId())
+                .password("another password")
+                .email("loustler@gmail.com")
+                .nickName("loustler")
+                .regiDate(Calendar.getInstance().getTime())
+                .point(new Integer(100))
+                .build();
         memberService.updateMember(updateDto);
 
         final MemberDto updateMember = memberService.getMember(member.getSequence());
@@ -65,6 +73,13 @@ public class MemberServiceIntegrationTest {
     }
 
     private MemberDto generateData() {
-        return new MemberDto("id", "password", "email@gmail.com", "nickName", Calendar.getInstance().getTime(), new Integer(0));
+        return new MemberDto.Builder()
+                .id("id")
+                .password("password")
+                .email("email@gmail.com")
+                .nickName("nickName")
+                .regiDate(Calendar.getInstance().getTime())
+                .point(new Integer(0))
+                .build();
     }
 }

@@ -1,10 +1,12 @@
 package io.codechobo.member.domain.support;
 
 import io.codechobo.member.domain.PointPerLevel;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -13,7 +15,7 @@ import java.util.Date;
  */
 @Accessors(chain = true)
 @Data
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class MemberDto {
     private Long sequence;
     private String id;
@@ -24,56 +26,71 @@ public class MemberDto {
     private Integer point;
     private PointPerLevel level;
 
-    /**
-     *
-     * @param sequence  멤버 시퀀스
-     */
-    public MemberDto(final Long sequence) {
-        this.sequence = sequence;
+    private MemberDto(Builder builder) {
+        this.sequence = builder.sequence;
+        this.id = builder.id;
+        this.password = builder.password;
+        this.email = builder.email;
+        this.nickName = builder.nickName;
+        this.regiDate = builder.regiDate;
+        this.point = builder.point;
+        this.level = builder.level;
     }
 
-    /**
-     *
-     * @param id        멤버 아이디
-     * @param password  멤버 패스워드
-     * @param email     멤버 이메일
-     * @param nickName  멤버 닉네임
-     */
-    public MemberDto(final String id, final String password, final String email, final String nickName) {
-        this(null, id, password, email, nickName, null, 0);
-    }
+    public static class Builder {
+        private Long sequence = null;
+        private String id = null;
+        private String password = null;
+        private String email = null;
+        private String nickName = null;
+        private Date regiDate = null;
+        private Integer point = null;
+        private PointPerLevel level = null;
 
-    /**
-     *
-     * @param id        멤버 아이디
-     * @param password  멤버 패스워드
-     * @param email     멤버 이메일
-     * @param nickName  멤버 닉네임
-     * @param regiDate  멤버 가입일
-     * @param point     멤버 포인트
-     */
-    public MemberDto(final String id, final String password, final String email, final String nickName, final Date regiDate, final Integer point) {
-        this(null, id, password, email, nickName, regiDate, point);
-    }
+        public Builder() {}
 
-    /**
-     *
-     * @param sequence  멤버 시퀀스
-     * @param id        멤버 아이디
-     * @param password  멤버 패스워드
-     * @param email     멤버 이메일
-     * @param nickName  멤버 닉네임
-     * @param regiDate  멤버 가입일
-     * @param point     멤버 포인트
-     */
-    public MemberDto(final Long sequence, final String id, final String password, final String email, final String nickName, final Date regiDate, final Integer point) {
-        this.sequence = sequence;
-        this.id = id;
-        this.password = password;
-        this.email = email;
-        this.nickName = nickName;
-        this.regiDate = regiDate;
-        this.point = point;
-        this.level = PointPerLevel.valueOf(this.point);
+        public Builder sequence(@NotNull final Long sequence) {
+            this.sequence = sequence;
+            return this;
+        }
+
+        public Builder id(@NotNull final String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder password(@NotNull final String password) {
+            this.password = password;
+            return this;
+        }
+
+        public Builder email(@NotNull final  String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder nickName(@NotNull final String nickName) {
+            this.nickName = nickName;
+            return this;
+        }
+
+        public Builder regiDate(@NotNull final Date regiDate) {
+            this.regiDate = regiDate;
+            return this;
+        }
+
+        public Builder point(@NotNull final Integer point) {
+            this.point = point;
+            return this;
+        }
+
+        public Builder level(@NotNull final PointPerLevel level) {
+            this.level = level;
+            return this;
+        }
+
+        public MemberDto build() {
+            return new MemberDto(this);
+        }
     }
 }

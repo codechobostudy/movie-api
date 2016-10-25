@@ -4,13 +4,16 @@ import io.codechobo.member.domain.Member;
 import io.codechobo.member.domain.PointPerLevel;
 import io.codechobo.member.domain.repository.MemberRepository;
 import io.codechobo.member.domain.support.MemberDto;
+import io.codechobo.member.domain.util.EntityDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotNull;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -31,7 +34,7 @@ public class MemberService {
         List<Member> member = memberRepository.findAll();
 
         return member.stream()
-                .map(m -> new MemberDto(m.getSeq(), m.getId(), m.getPassword(), m.getEmail(), m.getNickName(), m.getRegistrationDate(), m.getPoint()))
+                .map(m -> EntityDtoConverter.memberConvertToDto(m))
                 .collect(Collectors.toList());
     }
 
@@ -46,7 +49,7 @@ public class MemberService {
 
         if(member == null) return null;
 
-        return new MemberDto(member.getSeq(), member.getId(), member.getPassword(), member.getEmail(), member.getNickName(), member.getRegistrationDate(), member.getPoint());
+        return EntityDtoConverter.memberConvertToDto(member);
     }
 
     /**
@@ -69,7 +72,7 @@ public class MemberService {
 
         member = memberRepository.save(member);
 
-        return new MemberDto(member.getSeq(), member.getId(), member.getPassword(), member.getEmail(), member.getNickName(), member.getRegistrationDate(), member.getPoint());
+        return EntityDtoConverter.memberConvertToDto(member);
     }
 
     /**
@@ -77,33 +80,31 @@ public class MemberService {
      *
      * @param memberDto
      * @return MemberDto
-     * @throws IllegalArgumentException in case member's sequence is null or member's member is not exist.
+     * @throws EntityNotFoundException member is not exist.
+     * @throws NullPointerException in case member sequence is null/
      */
     @Transactional
     public MemberDto updateMember(MemberDto memberDto) {
-        if(memberDto.getSequence() == null || !memberRepository.exists(memberDto.getSequence())) {
-            throw new IllegalArgumentException();
+
+        if(!memberRepository.exists(Objects.requireNonNull(memberDto.getSequence()))) {
+            throw new EntityNotFoundException();
         }
 
         memberDto.setLevel(PointPerLevel.valueOf(memberDto.getPoint()));
 
         Member member = memberRepository.save(new Member(memberDto));
 
-        return new MemberDto(member.getSeq(), member.getId(), member.getPassword(), member.getEmail(), member.getNickName(), member.getRegistrationDate(), member.getPoint());
+        return EntityDtoConverter.memberConvertToDto(member);
     }
 
     /**
      * Delete member using member sequence.
      *
      * @param memberSequence
-     * @throws IllegalArgumentException in case member sequence is null.
+     * @throws NullPointerException in case member sequence is null.
      */
     @Transactional
     public void deleteMember(@NotNull final Long memberSequence) {
-        if(memberSequence == null) {
-            throw new IllegalArgumentException();
-        }
-
-        memberRepository.delete(memberSequence);
+        memberRepository.delete(Objects.requireNonNull(memberSequence));
     }
 }

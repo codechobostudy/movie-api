@@ -5,12 +5,15 @@ import io.codechobo.member.domain.Social;
 import io.codechobo.member.domain.repository.MemberRepository;
 import io.codechobo.member.domain.repository.SocialRepository;
 import io.codechobo.member.domain.support.SocialDto;
+import io.codechobo.member.domain.util.EntityDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -33,7 +36,7 @@ public class SocialService {
     public List<SocialDto> getSocials(@NotNull final Long memberSequence) {
         return socialRepository.findByMemberSequence(memberSequence)
                 .stream()
-                .map(s -> new SocialDto(s.getSeq(), s.getType(), s.getMember().getSeq()))
+                .map(s -> EntityDtoConverter.socialConvertToDto(s))
                 .collect(Collectors.toList());
     }
 
@@ -46,7 +49,7 @@ public class SocialService {
     public SocialDto getSocial(@NotNull final Long socialSequence) {
         Social foundSocial = socialRepository.findOne(socialSequence);
 
-        return new SocialDto(foundSocial.getSeq(), foundSocial.getType(), foundSocial.getMember().getSeq());
+        return EntityDtoConverter.socialConvertToDto(foundSocial);
     }
 
     /**
@@ -54,12 +57,12 @@ public class SocialService {
      *
      * @param socialDto
      * @return SocialDto
-     * @throws IllegalArgumentException in case socialDto's member sequence is null
+     * @throws NullPointerException in case socialDto's member sequence is null
      */
     @Transactional
     public SocialDto createSocial(@NotNull final SocialDto socialDto) {
         if(socialDto.getMemberSequence() == null)
-            throw new IllegalArgumentException("SocialDto's mebmer sequence must be not null.");
+            throw new NullPointerException();
 
         Social social = new Social(socialDto);
 
@@ -69,7 +72,7 @@ public class SocialService {
 
         Social created = socialRepository.save(social);
 
-        return new SocialDto(created.getSeq(), created.getType(), created.getMember().getSeq());
+        return EntityDtoConverter.socialConvertToDto(created);
     }
 
     /**
@@ -77,30 +80,30 @@ public class SocialService {
      *
      * @param socialDto
      * @return SocialDto
-     * @throws IllegalArgumentException in case social sequence is null or not exist.
+     * @throws EntityNotFoundException in case social sequence is null or not exist.
+     * @throws NullPointerException in case social sequence is null.
      */
     @Transactional
     public SocialDto updateSocial(@NotNull final SocialDto socialDto) {
-        if(socialDto.getSequence() == null)
-            throw new IllegalArgumentException("Social update failed. social sequence required.");
 
-        if(!socialRepository.exists(socialDto.getSequence()))
-            throw new IllegalArgumentException(socialDto.getSequence()+" is not exist.");
+        if(!socialRepository.exists(Objects.requireNonNull(socialDto.getSequence())))
+            throw new EntityNotFoundException(socialDto.getSequence()+" is not exist.");
 
         Social updateSocial = new Social(socialDto);
 
         updateSocial = socialRepository.save(updateSocial);
 
-        return new SocialDto(updateSocial.getSeq(), updateSocial.getType(), updateSocial.getMember().getSeq());
+        return EntityDtoConverter.socialConvertToDto(updateSocial);
     }
 
     /**
      * Delete social using social sequence.
      *
      * @param socialSequence NotNull
+     * @throws NullPointerException in case social sequence is null.
      */
     @Transactional
     public void deleteSocial(@NotNull final Long socialSequence) {
-        socialRepository.delete(socialSequence);
+        socialRepository.delete(Objects.requireNonNull(socialSequence));
     }
 }

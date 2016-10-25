@@ -1,8 +1,11 @@
 package io.codechobo.member.domain.support;
 
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * @author loustler
@@ -10,7 +13,7 @@ import lombok.experimental.Accessors;
  */
 @Accessors(chain = true)
 @Data
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class SocialDto {
     private Long sequence;
     private String type;
@@ -18,44 +21,47 @@ public class SocialDto {
     private Long memberSequence;
 
     /**
+     * Builder pattern
      *
-     * @param sequence          소셜 시퀀스
+     * @param builder
      */
-    public SocialDto(final Long sequence) {
-        this.sequence = sequence;
+    private SocialDto(final Builder builder) {
+        this.sequence = builder.sequence;
+        this.type = builder.type;
+        this.token = builder.token;
+        this.memberSequence = builder.memberSequence;
     }
 
-    /**
-     *
-     * @param type              소셜 타입
-     * @param token             소셜 액세스 토큰
-     * @param memberSequence    소셜을 가진 멤버의 시퀀스
-     */
-    public SocialDto(final String type, final String token, final Long memberSequence) {
-        this(null, type, token, memberSequence);
-    }
+    public static class Builder {
+        private Long sequence = null;
+        private String type = null;
+        private String token = null;
+        private Long memberSequence = null;
 
-    /**
-     *
-     * @param sequence          소셜 시퀀스
-     * @param type              소셜 타입
-     * @param memberSequence    소셜을 가진 멤버의 시퀀스
-     */
-    public SocialDto(final Long sequence, final String type, final Long memberSequence) {
-        this(sequence, type, null, memberSequence);
-    }
+        public Builder() {}
 
-    /**
-     *
-     * @param sequence          소셜 타입
-     * @param type              소셜 타입
-     * @param token             소셜 액세스 토큰
-     * @param memberSequence    소셜을 가진 멤버의 시퀀스
-     */
-    public SocialDto(final Long sequence, final String type, final String token, final Long memberSequence) {
-        this.sequence = sequence;
-        this.type = type;
-        this.token = token;
-        this.memberSequence = memberSequence;
+        public Builder sequence(@NotNull final Long sequence) {
+            this.sequence = sequence;
+            return this;
+        }
+
+        public Builder type(@NotNull final String type) {
+            this.type = type;
+            return this;
+        }
+
+        public Builder token(@NotNull final String token) {
+            this.token = token;
+            return this;
+        }
+
+        public Builder memberSequence(@NotNull final Long memberSequence) {
+            this.memberSequence = memberSequence;
+            return this;
+        }
+
+        public SocialDto build() {
+            return new SocialDto(this);
+        }
     }
 }

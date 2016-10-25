@@ -101,8 +101,8 @@ public class WinningControllerIntegrationTest {
                 .with이벤트상태(EventStatus.OPEN).build();
         anEvent = eventRepository.save(anEvent);
 
-        응모자1 = new Member(new MemberDto("member1", "password1", "email1@gmail.com", "nickname1"));
-        응모자2 = new Member(new MemberDto("member2", "password2", "email2@gmail.com", "nickname2"));
+        응모자1 = new Member(new MemberDto.Builder().id("member1").password("password1").email("email1@gmail.com").nickName("nickname1").build());
+        응모자2 = new Member(new MemberDto.Builder().id("member2").password("password2").email("email2@gmail.com").nickName("nickName2").build());
         memberRepository.save(응모자1);
         memberRepository.save(응모자2);
 

@@ -2,6 +2,7 @@ package io.codechobo.member.domain;
 
 
 import io.codechobo.member.domain.support.MemberDto;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,7 +28,7 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
     @Id

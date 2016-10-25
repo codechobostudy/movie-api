@@ -47,7 +47,7 @@ public class MemberRestControllerIntegrationTest {
 
     @Test
     public void 멤버_등록_create_member_via_create() throws Exception{
-        MemberDto memberDto = new MemberDto("id", "password", "email@gmail.com", "닉네임");
+        MemberDto memberDto = new MemberDto.Builder().id("id").password("password").email("email@gmail.com").nickName("닉네임").build();
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(memberDto);
         System.out.println(json);
@@ -59,7 +59,7 @@ public class MemberRestControllerIntegrationTest {
 
     @Test
     public void 멤버_가져오기_get_member() throws Exception {
-        MemberDto memberDto = new MemberDto("id", "password", "email@gmail.com", "닉네임");
+        MemberDto memberDto = new MemberDto.Builder().id("id").password("password").email("email@gmail.com").nickName("닉네임").build();
         MemberDto member = memberService.createMember(memberDto);
 
         mvc.perform(get("/api/member/"+member.getSequence()))
@@ -68,7 +68,7 @@ public class MemberRestControllerIntegrationTest {
 
     @Test
     public void 멤버_업데이트_update_member() throws Exception {
-        MemberDto memberDto = new MemberDto("id", "password", "email@gmail.com", "닉네임");
+        MemberDto memberDto = new MemberDto.Builder().id("id").password("password").email("email@gmail.com").nickName("닉네임").build();
         MemberDto member = memberService.createMember(memberDto);
 
         member.setPassword("pwd");
@@ -86,7 +86,7 @@ public class MemberRestControllerIntegrationTest {
 
     @Test
     public void 멤버_삭제_delete_member() throws Exception {
-        MemberDto memberDto = new MemberDto("id", "password", "email@gmail.com", "닉네임");
+        MemberDto memberDto = new MemberDto.Builder().id("id").password("password").email("email@gmail.com").nickName("닉네임").build();
         MemberDto member = memberService.createMember(memberDto);
 
         mvc.perform(delete("/api/member/"+member.getSequence()))

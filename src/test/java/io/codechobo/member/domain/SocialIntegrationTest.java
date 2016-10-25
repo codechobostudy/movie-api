@@ -87,7 +87,16 @@ public class SocialIntegrationTest {
     public void 소셜가져오기_social_find() {
 
         // given
-        Member newMember = new Member(new MemberDto("id1", "password2", "email@gmail.com", "nickName3", this.now, new Integer(0)));
+        Member newMember = new Member(
+                new MemberDto.Builder()
+                .id("id1")
+                .password("password2")
+                .email("email@gmail.com")
+                .nickName("nickName3")
+                .regiDate(this.now)
+                .point(new Integer(0))
+                .build()
+        );
 
         this.memberRepository.save(newMember);
 
@@ -107,7 +116,16 @@ public class SocialIntegrationTest {
     }
 
     private Member memberFactory() {
-        return memberRepository.save(new Member(new MemberDto("anyone", "password", "email@provider.com", "anonymouse", this.now, new Integer(0))));
+        return memberRepository.save(new Member(
+                new MemberDto.Builder()
+                .id("anyone")
+                .password("password")
+                .email("email@provider.com")
+                .nickName("anonymouse")
+                .regiDate(this.now)
+                .point(new Integer(0))
+                .build())
+        );
     }
 
     private Social socialFactory() {

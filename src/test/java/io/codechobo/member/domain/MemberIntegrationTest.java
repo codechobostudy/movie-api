@@ -46,7 +46,16 @@ public class MemberIntegrationTest {
     @Test
     public void 멤버생성_create_new_member() {
         // given
-        Member member = new Member(new MemberDto("test", "password", "dev.loustler@gmail.com", "loustler", Calendar.getInstance().getTime(), new Integer(0)));
+        Member member = new Member(
+                new MemberDto.Builder()
+                        .id("test")
+                        .password("password")
+                        .email("dev.loustler@gmail.com")
+                        .nickName("loustler")
+                        .regiDate(Calendar.getInstance().getTime())
+                        .point(new Integer(0))
+                        .build()
+        );
 
         //when
         Member saveMember = memberRepository.save(member);
@@ -87,7 +96,16 @@ public class MemberIntegrationTest {
     @Test
     public void 멤버레벨업_level_up_member() {
         // given
-        Member newMember = new Member(new MemberDto("any2", "password", "email2@gmail.com", "anonymouse2", Calendar.getInstance().getTime(), new Integer(500)));
+        Member newMember = new Member(
+                new MemberDto.Builder()
+                .id("any2")
+                .password("password")
+                .email("email2@gmail.com")
+                .nickName("anonymouse2")
+                .regiDate(Calendar.getInstance().getTime())
+                .point(new Integer(500))
+                .build()
+        );
 
         // when
         memberRepository.save(newMember);
@@ -114,7 +132,16 @@ public class MemberIntegrationTest {
     }
 
     private Member memberFactory() {
-        Member member = new Member(new MemberDto("any1", "password", "email@gmail.com", "anonymouse", Calendar.getInstance().getTime(), new Integer(0)));
+        Member member = new Member(
+                new MemberDto.Builder()
+                .id("any1")
+                .password("password")
+                .email("email@gmail.com")
+                .nickName("anonymouse")
+                .regiDate(Calendar.getInstance().getTime())
+                .point(new Integer(0))
+                .build()
+        );
         return memberRepository.save(member);
     }
 }

@@ -2,6 +2,7 @@ package io.codechobo.member.domain;
 
 
 import io.codechobo.member.domain.support.SocialDto;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,7 +20,7 @@ import javax.persistence.ManyToOne;
  * Created by Loustler on 8/7/16.
  */
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Setter
 @Getter
 public class Social {
