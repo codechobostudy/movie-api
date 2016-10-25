@@ -34,7 +34,7 @@ public class SocialService {
      * @return
      */
     public List<SocialDto> getSocials(@NotNull final Long memberSequence) {
-        return socialRepository.findByMemberSequence(memberSequence)
+        return socialRepository.findByMemberSeq(memberSequence)
                 .stream()
                 .map(s -> EntityDtoConverter.socialConvertToDto(s))
                 .collect(Collectors.toList());

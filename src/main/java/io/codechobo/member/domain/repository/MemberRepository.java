@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
-    Member findByNickName(String nickname);
-    Member findByEmail(String email);
+    Member findByNickName(final String nickname);
+    Member findByEmail(final String email);
 }

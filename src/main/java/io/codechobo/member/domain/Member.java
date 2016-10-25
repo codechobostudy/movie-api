@@ -26,9 +26,9 @@ import java.util.List;
  * @since  08/07/2016
  */
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Setter
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
     @Id
