@@ -57,7 +57,7 @@ public class MemberIntegrationTest {
                         .build()
         );
 
-        //when
+        // when
         Member saveMember = memberRepository.save(member);
 
         // then

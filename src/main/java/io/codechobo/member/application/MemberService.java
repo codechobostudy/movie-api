@@ -47,7 +47,7 @@ public class MemberService {
     public MemberDto getMember(final Long sequence) {
         Member member = memberRepository.findOne(sequence);
 
-        if(member == null) return null;
+        if(Objects.isNull(member)) return null;
 
         return EntityDtoConverter.memberConvertToDto(member);
     }
@@ -62,10 +62,10 @@ public class MemberService {
     public MemberDto createMember(final MemberDto memberDto) {
         Member member = new Member(memberDto);
 
-        if(member.getPoint() == null)
+        if(Objects.isNull(member.getPoint()))
             member.setPoint(new Integer(0));
 
-        if(member.getRegistrationDate() == null)
+        if(Objects.isNull(member.getRegistrationDate()))
             member.setRegistrationDate(Calendar.getInstance().getTime());
 
         member.setLevel(PointPerLevel.valueOf(member.getPoint()));

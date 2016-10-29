@@ -29,9 +29,11 @@ public class MemberServiceIntegrationTest {
 
     @Test
     public void 멤버등록_테스트_crate_member() {
+        // given & when
         final MemberDto dto = generateData();
         final MemberDto member = memberService.createMember(dto);
 
+        // then
         assertNotNull(member);
         assertThat(member.getNickName(), is("nickName"));
         System.out.println(member.getLevel());
@@ -39,6 +41,7 @@ public class MemberServiceIntegrationTest {
 
     @Test
     public void 멤버_업데이트_update_member() {
+        // given
         final MemberDto dto = generateData();
         final MemberDto member = memberService.createMember(dto);
 
@@ -53,8 +56,10 @@ public class MemberServiceIntegrationTest {
                 .build();
         memberService.updateMember(updateDto);
 
+        // when
         final MemberDto updateMember = memberService.getMember(member.getSequence());
 
+        // then
         assertNotNull(updateMember);
         assertThat(updateMember.getNickName(), is("loustler"));
         assertThat(updateMember.getLevel(), is(PointPerLevel.STANDARD));
@@ -62,13 +67,16 @@ public class MemberServiceIntegrationTest {
 
     @Test
     public void 멤버_삭제_remove_member() {
+        // given
         final MemberDto dto = generateData();
         final MemberDto member = memberService.createMember(dto);
 
         memberService.deleteMember(member.getSequence());
 
+        // when
         MemberDto after = memberService.getMember(member.getSequence());
 
+        // then
         assertNull(after);
     }
 

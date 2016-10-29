@@ -3,6 +3,7 @@ package io.codechobo.member.domain;
 import io.codechobo.member.domain.repository.MemberRepository;
 import io.codechobo.member.domain.repository.SocialRepository;
 import io.codechobo.member.domain.support.MemberDto;
+import io.codechobo.member.domain.util.EntityDtoConverter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -56,17 +57,15 @@ public class SocialIntegrationTest {
 
     @Test
     public void 설정테스트_config_test() {
-        this.member.getSocials().stream()
-                .forEach(e -> System.out.println(e.getMember().getSeq()));
-
-        System.out.println(this.member.getSeq());
+        System.out.println(EntityDtoConverter.socialConvertToDto(this.social));
+        System.out.println(EntityDtoConverter.memberConvertToDto(this.member));
     }
 
     @Test
     public void 소셜추가_another_social_add() {
         // given
         Social anotherSocial = new Social();
-        anotherSocial.setMember(this.member);
+        anotherSocial.setMember(memberRepository.findOne(this.member.getSeq()));
         anotherSocial.setToken("accessToken2");
         anotherSocial.setType("google");
 
@@ -100,15 +99,16 @@ public class SocialIntegrationTest {
 
         this.memberRepository.save(newMember);
 
+        // then
         Social social1 = new Social();
         social1.setMember(newMember);
         social1.setType("stackoverflow");
         social1.setToken("accessToken3");
 
         newMember.getSocials().add(social1);
-
         social1 = this.socialRepository.save(social1);
 
+        // then
         assertNotNull(social1);
 
         Social find = this.socialRepository.findOne(social1.getSeq());
@@ -131,7 +131,7 @@ public class SocialIntegrationTest {
     private Social socialFactory() {
         Social social = new Social();
         social.setMember(this.member);
-        social.setToken("accessToken");
+        social.setToken("2kd8fd7s9xkcfsl22kldkfysdf1");
         social.setType("github");
 
         return socialRepository.save(social);

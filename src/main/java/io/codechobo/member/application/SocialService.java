@@ -61,12 +61,9 @@ public class SocialService {
      */
     @Transactional
     public SocialDto createSocial(@NotNull final SocialDto socialDto) {
-        if(socialDto.getMemberSequence() == null)
-            throw new NullPointerException();
+        Member foundMember = memberRepository.findOne(Objects.requireNonNull(socialDto.getMemberSequence()));
 
-        Social social = new Social(socialDto);
-
-        Member foundMember = memberRepository.findOne(socialDto.getMemberSequence());
+        Social social = EntityDtoConverter.socialDtoConvertToEntity(socialDto);
 
         social.setMember(foundMember);
 
@@ -85,8 +82,7 @@ public class SocialService {
      */
     @Transactional
     public SocialDto updateSocial(@NotNull final SocialDto socialDto) {
-
-        if(!socialRepository.exists(Objects.requireNonNull(socialDto.getSequence())))
+        if (!socialRepository.exists(Objects.requireNonNull(socialDto.getSequence())))
             throw new EntityNotFoundException(socialDto.getSequence()+" is not exist.");
 
         Social updateSocial = new Social(socialDto);
