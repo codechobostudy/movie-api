@@ -10,6 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Calendar;
+import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNotNull;
@@ -78,6 +79,19 @@ public class MemberServiceIntegrationTest {
 
         // then
         assertNull(after);
+    }
+
+    @Test
+    public void 멤버_리스트_get_members() {
+        // given
+        List<MemberDto> memberDtoList = memberService.getMembers();
+
+        // when
+
+        // then
+        assertThat(memberDtoList.size(), is(0));
+        assertNotNull(memberDtoList);
+
     }
 
     private MemberDto generateData() {

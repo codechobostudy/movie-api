@@ -7,7 +7,10 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author loustler
@@ -25,6 +28,7 @@ public class MemberDto {
     private Date regiDate;
     private Integer point;
     private PointPerLevel level;
+    private List<SocialDto> socialDtoList;
 
     private MemberDto(Builder builder) {
         this.sequence = builder.sequence;
@@ -35,6 +39,7 @@ public class MemberDto {
         this.regiDate = builder.regiDate;
         this.point = builder.point;
         this.level = builder.level;
+        this.socialDtoList = builder.socialDtoList;
     }
 
     public static class Builder {
@@ -46,6 +51,7 @@ public class MemberDto {
         private Date regiDate = null;
         private Integer point = null;
         private PointPerLevel level = null;
+        private List<SocialDto> socialDtoList = null;
 
         public Builder() {}
 
@@ -86,6 +92,20 @@ public class MemberDto {
 
         public Builder level(@NotNull final PointPerLevel level) {
             this.level = level;
+            return this;
+        }
+
+        public Builder socials(@NotNull final List<SocialDto> socialDtoList) {
+            this.socialDtoList = socialDtoList;
+            return this;
+        }
+
+        public Builder social(@NotNull final SocialDto socialDto) {
+            if(Objects.isNull(this.socialDtoList))
+                this.socialDtoList = new ArrayList<>();
+
+            this.socialDtoList.add(socialDto);
+
             return this;
         }
 

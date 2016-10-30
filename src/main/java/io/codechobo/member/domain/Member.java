@@ -11,6 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -66,7 +67,7 @@ public class Member {
     /*
      * social은 member에 종속적이므로 cascade
      */
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "member")
     private List<Social> socials;
 
     public Member(final MemberDto memberDto) {
@@ -79,5 +80,4 @@ public class Member {
         this.level = memberDto.getLevel();
         this.registrationDate = memberDto.getRegiDate();
     }
-
 }

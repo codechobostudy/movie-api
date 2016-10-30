@@ -44,6 +44,7 @@ public class SocialRestController {
 
     @RequestMapping(value = "{seq}", method = RequestMethod.DELETE)
     public ResponseEntity delete(@PathVariable Long seq) {
+        socialService.deleteSocial(seq);
         return new ResponseEntity(HttpStatus.OK);
     }
 }

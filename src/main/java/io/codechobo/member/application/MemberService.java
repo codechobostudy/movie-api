@@ -2,6 +2,7 @@ package io.codechobo.member.application;
 
 import io.codechobo.member.domain.Member;
 import io.codechobo.member.domain.PointPerLevel;
+import io.codechobo.member.domain.Social;
 import io.codechobo.member.domain.repository.MemberRepository;
 import io.codechobo.member.domain.support.MemberDto;
 import io.codechobo.member.domain.util.EntityDtoConverter;
@@ -11,16 +12,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * @author loustler
  * @since 10/02/2016 10:12
  */
 @Service
+@Transactional
 public class MemberService {
     @Autowired
     private MemberRepository memberRepository;
@@ -28,14 +30,15 @@ public class MemberService {
     /**
      * Get mebmer list.
      *
-     * @return MemberDto list
+     * @return MemberDto List if member not found is empty size
+     * @throws NullPointerException in case member list is null
      */
     public List<MemberDto> getMembers() {
-        List<Member> member = memberRepository.findAll();
+        List<Member> memberList = memberRepository.findAll();
 
-        return member.stream()
-                .map(m -> EntityDtoConverter.memberConvertToDto(m))
-                .collect(Collectors.toList());
+        if(Objects.isNull(memberList)) return null;
+
+        return EntityDtoConverter.memberListConvertToDtoList(memberList);
     }
 
     /**
@@ -58,7 +61,6 @@ public class MemberService {
      * @param memberDto
      * @return MemberDto
      */
-    @Transactional
     public MemberDto createMember(final MemberDto memberDto) {
         Member member = new Member(memberDto);
 
@@ -70,9 +72,11 @@ public class MemberService {
 
         member.setLevel(PointPerLevel.valueOf(member.getPoint()));
 
-        member = memberRepository.save(member);
+        member.setSocials(new ArrayList<Social>());
 
-        return EntityDtoConverter.memberConvertToDto(member);
+        Member createdMember = memberRepository.save(member);
+
+        return EntityDtoConverter.memberConvertToDto(createdMember);
     }
 
     /**
@@ -83,7 +87,6 @@ public class MemberService {
      * @throws EntityNotFoundException member is not exist.
      * @throws NullPointerException in case member sequence is null/
      */
-    @Transactional
     public MemberDto updateMember(MemberDto memberDto) {
 
         if(!memberRepository.exists(Objects.requireNonNull(memberDto.getSequence()))) {
@@ -103,7 +106,6 @@ public class MemberService {
      * @param memberSequence
      * @throws NullPointerException in case member sequence is null.
      */
-    @Transactional
     public void deleteMember(@NotNull final Long memberSequence) {
         memberRepository.delete(Objects.requireNonNull(memberSequence));
     }
