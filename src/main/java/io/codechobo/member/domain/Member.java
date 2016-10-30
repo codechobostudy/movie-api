@@ -11,7 +11,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -67,7 +66,7 @@ public class Member {
     /*
      * social은 member에 종속적이므로 cascade
      */
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "seq")
+    @OneToMany
     private List<Social> socials;
 
     public Member(final MemberDto memberDto) {
