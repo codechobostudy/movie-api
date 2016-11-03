@@ -37,7 +37,6 @@ public class MemberServiceIntegrationTest {
         // then
         assertNotNull(member);
         assertThat(member.getNickName(), is("nickName"));
-        System.out.println(member.getLevel());
     }
 
     @Test

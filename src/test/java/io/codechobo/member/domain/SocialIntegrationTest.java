@@ -3,7 +3,6 @@ package io.codechobo.member.domain;
 import io.codechobo.member.domain.repository.MemberRepository;
 import io.codechobo.member.domain.repository.SocialRepository;
 import io.codechobo.member.domain.support.MemberDto;
-import io.codechobo.member.domain.util.EntityDtoConverter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -57,8 +56,6 @@ public class SocialIntegrationTest {
 
     @Test
     public void 설정테스트_config_test() {
-        System.out.println(EntityDtoConverter.socialConvertToDto(this.social));
-        System.out.println(EntityDtoConverter.memberConvertToDto(this.member));
     }
 
     @Test
@@ -97,7 +94,8 @@ public class SocialIntegrationTest {
                 .build()
         );
 
-        this.memberRepository.save(newMember);
+        newMember = this.memberRepository.save(newMember);
+        newMember.setSocials(new ArrayList<>());
 
         // then
         Social social1 = new Social();
@@ -112,7 +110,8 @@ public class SocialIntegrationTest {
         assertNotNull(social1);
 
         Social find = this.socialRepository.findOne(social1.getSeq());
-        System.out.println(find);
+        assertNotNull(find);
+        assertThat(social1.getSeq(), is(find.getSeq()));
     }
 
     private Member memberFactory() {

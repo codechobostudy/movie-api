@@ -62,8 +62,8 @@ public class MemberIntegrationTest {
 
         // then
         assertThat(saveMember.getLevel(), is(PointPerLevel.BASIC));
+        assertNotNull(saveMember);
         assertNotNull(saveMember.getSeq());
-        System.out.println(saveMember);
     }
 
     @Test

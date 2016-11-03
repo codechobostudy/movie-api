@@ -1,13 +1,9 @@
 package io.codechobo.member.domain.util;
 
-import io.codechobo.member.domain.Member;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.lang.reflect.Method;
 
 /**
  * @author loustler
@@ -17,27 +13,4 @@ import java.lang.reflect.Method;
 @SpringBootTest
 @ActiveProfiles(value = "test")
 public class EntityDtoConverterIntegrationTest {
-    @Test
-    public void class_get_methods() {
-        Class entityC = new EntityDtoConverter().getClass();
-        for(Method method : entityC.getMethods())
-            System.out.println(method.getName());
-    }
-
-    @Test(expected = NoSuchMethodException.class)
-    public void class_get_specify_method() throws Exception{
-        String methodName = "memberConvertToDto";
-        Class entityC = new EntityDtoConverter().getClass();
-        Method method = entityC.getMethod(methodName, new Class[]{Member.class});
-
-        for(Class parameter : method.getParameterTypes())
-            System.out.println(parameter.getName());
-    }
-
-    @Test(expected = NoSuchMethodException.class)
-    public void method_invoke_test() throws Exception{
-        Method method = Integer.class.getMethod("parseInt", String.class);
-
-        System.out.println(method.invoke(method, "5").toString());
-    }
 }

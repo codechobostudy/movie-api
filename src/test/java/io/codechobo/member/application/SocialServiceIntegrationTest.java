@@ -39,14 +39,10 @@ public class SocialServiceIntegrationTest {
     public void set_up() {
         this.memberDto = memberDtoFactory();
         this.socialDto = socialDtoFactory();
-        System.out.println(this.socialDto);
-        System.out.println(this.memberDto);
     }
 
     @Test
     public void config_test() {
-        System.out.println(this.socialDto);
-        System.out.println(this.memberDto);
     }
 
     /**
@@ -73,7 +69,6 @@ public class SocialServiceIntegrationTest {
 
         // then
         assertNotNull(dtoList);
-        dtoList.forEach(d -> System.out.println(d));
     }
 
     @Test
@@ -92,7 +87,6 @@ public class SocialServiceIntegrationTest {
         // then
         assertNotNull(updated);
         assertThat(updated.getToken(), is(token));
-        System.out.println(updated);
     }
 
     @Test(expected = NullPointerException.class)

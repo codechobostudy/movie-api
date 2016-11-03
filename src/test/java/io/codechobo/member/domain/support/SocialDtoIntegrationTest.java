@@ -6,6 +6,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
+
 /**
  * @author loustler
  * @since 10/25/2016 12:54
@@ -25,6 +29,7 @@ public class SocialDtoIntegrationTest {
                             .build();
 
 
-        System.out.println(dto);
+        assertNotNull(dto);
+        assertThat(dto.getSequence(), is(new Long(5)));
     }
 }
