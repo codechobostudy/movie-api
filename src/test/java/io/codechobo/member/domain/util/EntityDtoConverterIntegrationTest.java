@@ -24,22 +24,17 @@ public class EntityDtoConverterIntegrationTest {
             System.out.println(method.getName());
     }
 
-    @Test
+    @Test(expected = NoSuchMethodException.class)
     public void class_get_specify_method() throws Exception{
         String methodName = "memberConvertToDto";
         Class entityC = new EntityDtoConverter().getClass();
-        Method method = null;
-        try {
-            method = entityC.getMethod(methodName, new Class[]{Member.class});
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
+        Method method = entityC.getMethod(methodName, new Class[]{Member.class});
 
         for(Class parameter : method.getParameterTypes())
             System.out.println(parameter.getName());
     }
 
-    @Test
+    @Test(expected = NoSuchMethodException.class)
     public void method_invoke_test() throws Exception{
         Method method = Integer.class.getMethod("parseInt", String.class);
 

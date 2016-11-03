@@ -15,6 +15,7 @@ import java.util.Objects;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -94,7 +95,7 @@ public class SocialServiceIntegrationTest {
         System.out.println(updated);
     }
 
-    @Test
+    @Test(expected = NullPointerException.class)
     public void delete_social() {
         // given
         SocialDto delete = this.socialDto;
@@ -104,11 +105,9 @@ public class SocialServiceIntegrationTest {
 
         // then
         // throw NullPointException is success.
-        try {
-            SocialDto deleted = socialService.getSocial(delete.getSequence());
-        } catch (NullPointerException e) {
-            System.out.println("success");
-        }
+        SocialDto deleted = socialService.getSocial(delete.getSequence());
+        assertNull(deleted);
+
     }
 
     private MemberDto memberDtoFactory() {
