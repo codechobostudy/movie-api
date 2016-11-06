@@ -1,14 +1,19 @@
 package io.codechobo.movie.dto;
 
+import io.codechobo.person.dto.PersonDto;
 import lombok.Getter;
 import lombok.Setter;
+import org.javers.core.metamodel.annotation.Id;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Setter
 @Getter
 public class MovieDto {
 
+    @Id
     private Long no;
 
     /**
@@ -31,6 +36,11 @@ public class MovieDto {
      */
     private Date releaseDate;
 
+    private List<PersonDto> directors = new ArrayList<>();
+
+    private List<PersonDto> actors = new ArrayList<>();
+
+
     public MovieDto(final Long no) {
         this.no = no;
     }
@@ -47,5 +57,16 @@ public class MovieDto {
         if (releaseDate!=null) {
             this.releaseDate = new Date(releaseDate.getTime());
         }
+        if (directors!=null) {
+            this.directors.addAll(directors);
+        }
+    }
+
+    public void addDirector(final PersonDto director) {
+        this.directors.add(director);
+    }
+
+    public void addActor(final PersonDto actor) {
+        this.actors.add(actor);
     }
 }
