@@ -30,15 +30,12 @@ public class MemberService {
     /**
      * Get mebmer list.
      *
-     * @return MemberDto List if member not found is empty size
-     * @throws NullPointerException in case member list is null
+     * @return MemberDto list
      */
     public List<MemberDto> getMembers() {
-        List<Member> memberList = memberRepository.findAll();
+        List<Member> member = memberRepository.findAll();
 
-        if(Objects.isNull(memberList)) return null;
-
-        return EntityDtoConverter.memberListConvertToDtoList(memberList);
+        return EntityDtoConverter.memberListConvertToDtoList(member);
     }
 
     /**
@@ -48,7 +45,7 @@ public class MemberService {
      * @return Null | MemberDto
      */
     public MemberDto getMember(final Long sequence) {
-        Member member = memberRepository.findOne(sequence);
+        Member member = memberRepository.findOne(Objects.requireNonNull(sequence));
 
         if(Objects.isNull(member)) return null;
 
@@ -62,7 +59,7 @@ public class MemberService {
      * @return MemberDto
      */
     public MemberDto createMember(final MemberDto memberDto) {
-        Member member = new Member(memberDto);
+        Member member = new Member(Objects.requireNonNull(memberDto));
 
         if(Objects.isNull(member.getPoint()))
             member.setPoint(new Integer(0));
