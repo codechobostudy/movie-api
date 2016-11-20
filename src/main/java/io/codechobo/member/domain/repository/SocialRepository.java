@@ -2,9 +2,15 @@ package io.codechobo.member.domain.repository;
 
 import io.codechobo.member.domain.Social;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
- * Created by Loustler on 8/21/16.
+ * @author loustler
+ * @since 08/21/2016
  */
+@Repository
 public interface SocialRepository extends JpaRepository<Social, Long> {
+    List<Social> findByMemberSeq(Long memberSeq);
 }

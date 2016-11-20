@@ -6,10 +6,11 @@ import org.springframework.stereotype.Repository;
 
 
 /**
- * Created by Loustler on 8/21/16.
+ * @author loustler
+ * @since 08/21/2016
  */
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
-    Member findByNickName(String nickname);
-    Member findByEmail(String email);
+    Member findByNickName(final String nickname);
+    Member findByEmail(final String email);
 }

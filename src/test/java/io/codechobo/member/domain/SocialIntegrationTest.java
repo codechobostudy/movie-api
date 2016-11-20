@@ -56,17 +56,13 @@ public class SocialIntegrationTest {
 
     @Test
     public void 설정테스트_config_test() {
-        this.member.getSocials().stream()
-                .forEach(e -> System.out.println(e.getMember().getSeq()));
-
-        System.out.println(this.member.getSeq());
     }
 
     @Test
     public void 소셜추가_another_social_add() {
         // given
         Social anotherSocial = new Social();
-        anotherSocial.setMember(this.member);
+        anotherSocial.setMember(memberRepository.findOne(this.member.getSeq()));
         anotherSocial.setToken("accessToken2");
         anotherSocial.setType("google");
 
@@ -87,34 +83,54 @@ public class SocialIntegrationTest {
     public void 소셜가져오기_social_find() {
 
         // given
-        Member newMember = new Member(new MemberDto("id1", "password2", "email@gmail.com", "nickName3", this.now, new Integer(0)));
+        Member newMember = new Member(
+                new MemberDto.Builder()
+                .id("id1")
+                .password("password2")
+                .email("email@gmail.com")
+                .nickName("nickName3")
+                .regiDate(this.now)
+                .point(new Integer(0))
+                .build()
+        );
 
-        this.memberRepository.save(newMember);
+        newMember = this.memberRepository.save(newMember);
+        newMember.setSocials(new ArrayList<>());
 
+        // then
         Social social1 = new Social();
         social1.setMember(newMember);
         social1.setType("stackoverflow");
         social1.setToken("accessToken3");
 
         newMember.getSocials().add(social1);
-
         social1 = this.socialRepository.save(social1);
 
+        // then
         assertNotNull(social1);
 
         Social find = this.socialRepository.findOne(social1.getSeq());
-        System.out.println(find);
-
+        assertNotNull(find);
+        assertThat(social1.getSeq(), is(find.getSeq()));
     }
 
     private Member memberFactory() {
-        return memberRepository.save(new Member(new MemberDto("anyone", "password", "email@provider.com", "anonymouse", this.now, new Integer(0))));
+        return memberRepository.save(new Member(
+                new MemberDto.Builder()
+                .id("anyone")
+                .password("password")
+                .email("email@provider.com")
+                .nickName("anonymouse")
+                .regiDate(this.now)
+                .point(new Integer(0))
+                .build())
+        );
     }
 
     private Social socialFactory() {
         Social social = new Social();
         social.setMember(this.member);
-        social.setToken("accessToken");
+        social.setToken("2kd8fd7s9xkcfsl22kldkfysdf1");
         social.setType("github");
 
         return socialRepository.save(social);

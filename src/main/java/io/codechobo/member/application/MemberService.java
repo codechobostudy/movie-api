@@ -2,74 +2,108 @@ package io.codechobo.member.application;
 
 import io.codechobo.member.domain.Member;
 import io.codechobo.member.domain.PointPerLevel;
+import io.codechobo.member.domain.Social;
 import io.codechobo.member.domain.repository.MemberRepository;
 import io.codechobo.member.domain.support.MemberDto;
+import io.codechobo.member.domain.util.EntityDtoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 /**
  * @author loustler
  * @since 10/02/2016 10:12
  */
 @Service
+@Transactional
 public class MemberService {
     @Autowired
     private MemberRepository memberRepository;
 
+    /**
+     * Get mebmer list.
+     *
+     * @return MemberDto list
+     */
     public List<MemberDto> getMembers() {
         List<Member> member = memberRepository.findAll();
 
-        return member.stream()
-                .map(m -> new MemberDto(m.getSeq(), m.getId(), m.getPassword(), m.getEmail(), m.getNickName(), m.getRegistrationDate(), m.getPoint()))
-                .collect(Collectors.toList());
+        return EntityDtoConverter.memberListConvertToDtoList(member);
     }
 
+    /**
+     * Get one Member using member's sequence.
+     *
+     * @param sequence
+     * @return Null | MemberDto
+     */
     public MemberDto getMember(final Long sequence) {
-        Member member = memberRepository.findOne(sequence);
+        Member member = memberRepository.findOne(Objects.requireNonNull(sequence));
 
-        if(member == null) return null;
+        if(Objects.isNull(member)) return null;
 
-        return new MemberDto(member.getSeq(), member.getId(), member.getPassword(), member.getEmail(), member.getNickName(), member.getRegistrationDate(), member.getPoint());
+        return EntityDtoConverter.memberConvertToDto(member);
     }
 
+    /**
+     * Create member using memberDTO.
+     *
+     * @param memberDto
+     * @return MemberDto
+     */
     public MemberDto createMember(final MemberDto memberDto) {
-        Member member = new Member(memberDto);
+        Member member = new Member(Objects.requireNonNull(memberDto));
 
-        if(member.getPoint() == null)
+        if(Objects.isNull(member.getPoint()))
             member.setPoint(new Integer(0));
 
-        if(member.getRegistrationDate() == null)
+        if(Objects.isNull(member.getRegistrationDate()))
             member.setRegistrationDate(Calendar.getInstance().getTime());
 
         member.setLevel(PointPerLevel.valueOf(member.getPoint()));
 
-        member = memberRepository.save(member);
+        member.setSocials(new ArrayList<Social>());
 
-        return new MemberDto(member.getSeq(), member.getId(), member.getPassword(), member.getEmail(), member.getNickName(), member.getRegistrationDate(), member.getPoint());
+        Member createdMember = memberRepository.save(member);
+
+        return EntityDtoConverter.memberConvertToDto(createdMember);
     }
 
+    /**
+     * Update member using memberDTO.
+     *
+     * @param memberDto
+     * @return MemberDto
+     * @throws EntityNotFoundException member is not exist.
+     * @throws NullPointerException in case member sequence is null/
+     */
     public MemberDto updateMember(MemberDto memberDto) {
-        if(memberDto.getSequence() == null || !memberRepository.exists(memberDto.getSequence())) {
-            throw new IllegalArgumentException();
+
+        if(!memberRepository.exists(Objects.requireNonNull(memberDto.getSequence()))) {
+            throw new EntityNotFoundException();
         }
 
         memberDto.setLevel(PointPerLevel.valueOf(memberDto.getPoint()));
 
         Member member = memberRepository.save(new Member(memberDto));
 
-        return new MemberDto(member.getSeq(), member.getId(), member.getPassword(), member.getEmail(), member.getNickName(), member.getRegistrationDate(), member.getPoint());
+        return EntityDtoConverter.memberConvertToDto(member);
     }
 
+    /**
+     * Delete member using member sequence.
+     *
+     * @param memberSequence
+     * @throws NullPointerException in case member sequence is null.
+     */
     public void deleteMember(@NotNull final Long memberSequence) {
-        if(memberSequence == null) {
-            throw new IllegalArgumentException();
-        }
-
-        memberRepository.delete(memberSequence);
+        memberRepository.delete(Objects.requireNonNull(memberSequence));
     }
 }

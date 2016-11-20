@@ -52,8 +52,8 @@ public class JoiningIntegrationTest {
 
     @Before
     public void setUp() {
-        member1 = new Member(new MemberDto("member1", "password", "이메일1@gmail.com", "닉네임1"));
-        member2 = new Member(new MemberDto("member2", "password", "이메일2@gmail.com", "닉네임2"));
+        member1 = new Member(new MemberDto.Builder().id("member1").password("password").email("이메일1@gmail.com").nickName("닉네임1").build());
+        member2 = new Member(new MemberDto.Builder().id("member2").password("password").email("이메일2@gmail.com").nickName("닉네임2").build());
         memberRepository.save(member1);
         memberRepository.save(member2);
 

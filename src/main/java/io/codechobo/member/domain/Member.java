@@ -2,6 +2,7 @@ package io.codechobo.member.domain;
 
 
 import io.codechobo.member.domain.support.MemberDto;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,12 +22,13 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Loustler on 8/7/16.
+ * @author loustler
+ * @since  08/07/2016
  */
 @Entity
 @Setter
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
     @Id
@@ -65,7 +67,7 @@ public class Member {
     /*
      * social은 member에 종속적이므로 cascade
      */
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "seq")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "member")
     private List<Social> socials;
 
     public Member(final MemberDto memberDto) {
@@ -78,5 +80,4 @@ public class Member {
         this.level = memberDto.getLevel();
         this.registrationDate = memberDto.getRegiDate();
     }
-
 }

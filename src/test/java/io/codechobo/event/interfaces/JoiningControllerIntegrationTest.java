@@ -73,7 +73,7 @@ public class JoiningControllerIntegrationTest {
         anEvent  = eventBuilder.build();
         eventRepository.save(anEvent);
 
-        aMember = new Member(new MemberDto("member", "password", "email@gmail.com", "nickname"));
+        aMember = new Member(new MemberDto.Builder().id("member").password("password").email("password").nickName("nickname").build());
         aMember = memberRepository.save(aMember);
     }
 

@@ -58,9 +58,23 @@ public class WinningIntegrationTest {
 
     @Before
     public void setUp() {
-        응모자1 = new Member(new MemberDto("member1", "password", "이메일1@gmail.com", "닉네임1"));
+        응모자1 = new Member(
+                new MemberDto.Builder()
+                        .id("member1")
+                        .password("password")
+                        .email("이메일1@gmail.com")
+                        .nickName("닉네임1")
+                        .build()
+        );
         memberRepository.save(응모자1);
-        응모자2 = new Member(new MemberDto("member2", "password", "이메일2@gmail.com", "닉네임2"));
+        응모자2 = new Member(
+                new MemberDto.Builder()
+                .id("member2")
+                .password("password")
+                .email("이메일2@gmail.com")
+                .nickName("닉네임2")
+                .build()
+        );
         memberRepository.save(응모자2);
 
         category = new EventCategory("온라인이벤트");
