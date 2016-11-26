@@ -96,12 +96,25 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.javers/javers-core -->
+		<dependency>
+			<groupId>org.javers</groupId>
+			<artifactId>javers-core</artifactId>
+			<version>2.6.0</version>
+		</dependency>
 		<!-- // helper -->
 
 		<!-- test -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.exparity</groupId>
+			<artifactId>hamcrest-date</artifactId>
+			<version>1.1.0</version>
 			<scope>test</scope>
 		</dependency>
 		<!-- // test -->
